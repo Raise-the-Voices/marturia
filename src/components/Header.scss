@@ -1,0 +1,79 @@
+@import '../styles/variables';
+
+.header-container {
+  background: #25646a;
+
+  .main-header {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: $max-page-width;
+    margin: 0 auto;
+    letter-spacing: 0.08rem;
+  
+	
+	.logo {
+      flex: 1;
+      color: $white-1;
+	  font-size: 0.8em;
+      background: rgb(0, 0, 0); // fallback
+      background: rgba(0, 0, 0, 0.55);
+      text-align: center;
+      text-transform: uppercase;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+	@media all and (min-width: 50em) {  
+	.logo {
+	  flex: 1 0 200px;
+      max-width: 200px;
+       font-size: 1.2em;
+      line-height: 1.4;
+
+	  }
+	}
+  }
+}
+
+.main-navigation {
+  flex: 4;
+
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;;
+
+    li {
+      font-size: 0.6em;
+
+      a {
+        display: block;
+        padding: 20px;
+        font-weight: bold;
+        text-decoration: none;
+        text-transform: uppercase;
+        color: $white-1;
+        border-radius: 4px;
+
+        &.active {
+          background: rgb(0, 0, 0); // fallback
+          background: rgba(0, 0, 0, 0.55);
+        }
+      }
+    }
+	@media all and (min-width: 30em) {  
+	li {
+      font-size: 0.95em;
+	  }
+	}
+  }
+}

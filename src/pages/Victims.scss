@@ -1,0 +1,176 @@
+@import '../styles/variables';
+
+.victims.page {
+
+  .wrapper {
+    width: 90%;
+
+    .searchSelect {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin: 0 0 10px;
+
+      @media (max-width: $break-sm) {
+        flex-direction: column;
+      }
+
+     form {
+        width: 24%;
+        margin: 0px 2px;
+
+        @media (max-width: $break-lg) {
+          width: 100%;
+          margin: 0 0 10px;
+        }
+
+        .search {
+          border: 1px solid darkgray;
+          width: 100%;
+        }
+      }
+
+      .selectSubmit {
+        margin: 0px 2px;
+
+        @media (max-width: $break-lg) {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          margin: 0px;
+        }
+
+        #countries {
+          padding: 8px 15px;
+
+          @media (max-width: $break-lg) {
+            width: 100%;
+          }
+        }
+
+				#status {
+          padding: 8px 15px;
+					margin-right: 4px;
+
+          @media (max-width: $break-lg) {
+            width: 100%;
+          }
+        }
+
+        .btn {
+          padding: 11px 15px;
+          line-height: 1.15;
+          margin: 0 10px 0;
+
+          @media (max-width: $break-lg) {
+            margin: 0 0px 0 10px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: $break-lg) {
+      width: 80%;
+    }
+  }
+
+  .filter {
+    margin-top: 20px;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $break-lg) {
+      flex-wrap: nowrap;
+      flex-direction: column;
+    }
+
+    li {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+			overflow-wrap: break-word;
+			word-break: break-all;
+      width: 48%;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid darkgray;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+      padding: 10px;
+
+      @media (max-width: $break-lg) {
+        justify-content: center;
+      }
+
+      .col:first-child {
+        margin-right: 20px;
+        width: 130px;
+        height: 160px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .col:nth-child(2) {
+        flex: 1;
+
+        @media (max-width: $break-lg) {
+          flex: initial;
+          width: 200px;
+        }
+
+        @media (max-width: $break-sm) {
+          flex: 1;
+          width: initial;
+        }
+      }
+
+      @media (max-width: $break-lg) {
+        width: 100%;
+      }
+
+      @media (max-width: $break-sm) {
+        flex-direction: column;
+      }
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+	.photo {
+		height: 100%;
+		width: 100%;
+		object-fit: contain;
+	}
+	
+    .more-btn {
+      margin-top: 10px;
+
+      @media (max-width: $break-sm) {
+        text-align: right;
+      }
+
+      a {
+        color: #25646a;
+        text-transform: uppercase;
+
+        &:visited {
+          color: #25646a;
+        }
+
+        &:hover, &:focus, &:active {
+          color: black;
+        }
+      }
+    }
+  }
+}
