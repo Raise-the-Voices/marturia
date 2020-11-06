@@ -1,19 +1,24 @@
-## Testimony Database Front-End APP (Marturia)
+<img src="public/favicons/mstile-150x150.png" height="150px" align="right"/>
 
-An application used to collect, display testimonies of victims. Created with React version: 16.12.0.
+## Marturia (Testimony Database APP)
+![Heroku](https://heroku-badge.herokuapp.com/?app=marturia)
 
-## Status  version: 0.1.0
+An application used to collect, display testimonies of victims
+
+## Project Status
 
 This project is currently in development. Some functions can be changed over time.
 
 ## Temporarily deployed in:
 
-[**_https://vast-cove-45980.herokuapp.com/_**](https://vast-cove-45980.herokuapp.com/)
+[**_https://marturia-prod.herokuapp.com/victims_**](https://marturia-prod.herokuapp.com/victims)
 
 ## Installation and Setup Instructions
+- React version: 16.13.1
+
 Clone down this repository. 
 
-    $ git clone git@github.com:gvelez17/marturia.git
+    $ git clone git@github.com:Raise-the-Voices/marturia.git
 
 You will need `node` and `npm` installed globally on your machine.
 
@@ -30,3 +35,6 @@ To Run Test Suite:
 To Start Server:
 
     $ npm start
+    
+## Contributing
+We'd love to have your helping hand on Marturia! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on what we're looking for and how to get started.
