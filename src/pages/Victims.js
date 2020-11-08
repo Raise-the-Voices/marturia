@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
-import {getAge} from '../utils/utils';
+import {getMMDDYYYYfromISO} from '../utils/utils';
 import './Victims.scss';
 import data from '../data/countries.json';
 import statuses from '../data/status.json';
@@ -17,7 +17,7 @@ const Victims = (props) => {
 
 
 	const constructQStr = (name, country, status) => {
-		let qstr = '?report-state=published&';
+		let qstr = '?report-state=published&sort=created_at desc&';
 
 
 		if(name) {
@@ -71,7 +71,7 @@ const Victims = (props) => {
 						"name": victim.name,
 						"status": victim.current_status,
 					  "location": victim.country,
-						"age": getAge(victim.date_of_birth),
+						"dob": getMMDDYYYYfromISO(victim.date_of_birth),
 						"url": victim.profile_image_url
 					  })
 				})
@@ -160,7 +160,7 @@ const Victims = (props) => {
 	                </div>
 	                <div className="col">
 	                  <div className="name"><span>Name:</span> {item.name}</div>
-	                  <div className="age"><span>Age:</span> {item.age}</div>
+	                  <div className="dob"><span>Date of Birth:</span> {item.dob}</div>
 	                  <div className="location"><span>Location: </span> {item.location}</div>
 	                  <div className="status"><span>Status: </span> {item.status}</div>
 	                  <div className="more-btn">
