@@ -6,8 +6,17 @@ export function getISOfromDatepicker(date) {
 }
 
 //date is of type iso string
+//Convert the type of month to string format
 export function getMMDDYYYYfromISO(date) {
-	return date.slice(0, 10)
+	const MONTH_NUM_TO_STR = {
+    "01": "January", "02":"February", "03":"March","04":"April","05":"May",
+    "06":"June","07":"July","08":"August","09":"September","10":"October",
+    "11":"November","12":"December"};
+
+  let date_str = date.slice(0, 10).split("-");
+  let month_num = date_str[1];
+  date_str[1] = MONTH_NUM_TO_STR[month_num];
+  return date_str.join(" ");
 }
 
 //date is of type iso string
