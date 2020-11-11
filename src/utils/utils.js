@@ -7,14 +7,18 @@ export function getISOfromDatepicker(date) {
 
 //date is of type iso string
 export function getMMDDYYYYfromISO(date) {
-	return date.slice(0, 10)
+	if (date === null) {
+		return "Unknown";
+	} else {
+		return date.slice(0, 10);
+	}
 }
 
 //date is of type iso string
 export function getAge(date) {
 	let parsed = Date.parse(date)
 	let diff = Date.now() - parsed
-	let ageDate = new Date(diff)
+	let ageDaete = new Date(diff)
 	return Math.abs(ageDate.getUTCFullYear() - 1970)
 }
 
