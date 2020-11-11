@@ -124,7 +124,7 @@ const SendingModal = () => {
   
   const handleFormSubmit = (form) => {
 	  setSubmitting(true)
-	  let reportObj = constructReportObj(form)
+    let reportObj = constructReportObj(form)
 	  fetch(process.env.REACT_APP_API_BASE + 'reports', {
 		  method: "POST",
 		  headers: authContentTypeHeaders(),
@@ -287,13 +287,11 @@ const SendingModal = () => {
                 />
               </div>
 			<div className="row">
-                <label htmlFor="birth_date">Date of Birth*</label>
+                <label htmlFor="birth_date">Date of Birth (Skip if unknown)</label>
                 <input type="date"
 											 id="birth_date"
 											 name="birth_date"
-											 ref={register({ required: true })}/>
-                {errors.birth_date &&
-                  <p className="error">Birth Date is required</p>}
+											 ref={register({ required: false })}/>
               </div>
               <div className="row">
                 <label htmlFor="about">About*</label>
@@ -354,13 +352,11 @@ const SendingModal = () => {
                 />
               </div>
 			  <div className="row">
-                <label htmlFor="detainment_date">Last Seen Date*</label>
+                <label htmlFor="detainment_date">Last Seen Date (Skip if unknown)</label>
                 <input type="date"
 											 id="detainment_date"
 											 name="detainment_date"
-											 ref={register({ required: true })}/>
-                {errors.detainment_date &&
-                  <p className="error">Last Seen Date is required</p>}
+											 ref={register({ required: false })}/>
               </div>
               <div className="row">
                 <label htmlFor="detainment_location">Last Seen Place*</label>
