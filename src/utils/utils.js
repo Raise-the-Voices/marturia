@@ -18,7 +18,7 @@ export function getMMDDYYYYfromISO(date) {
 export function getAge(date) {
 	let parsed = Date.parse(date)
 	let diff = Date.now() - parsed
-	let ageDaete = new Date(diff)
+	let ageDate = new Date(diff)
 	return Math.abs(ageDate.getUTCFullYear() - 1970)
 }
 
