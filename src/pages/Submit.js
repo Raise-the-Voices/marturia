@@ -24,10 +24,10 @@ const Submit = (props) => {
 
   const nameRef = useRef();
   const { register, trigger, errors, getValues, handleSubmit } = useForm({
-	   defaultValues: {
+    defaultValues: {
     country: "",
-	language:""
-  
+	  language:"",
+    gender:""
   }})
   
 	const [photoUploaded, setPhotoUploaded] = useState(false)
@@ -270,11 +270,16 @@ const SendingModal = () => {
               </div>
 			  <div className="row">
                 <label htmlFor="gender">Gender*</label>
-                <input
-                  id="gender"
-                  name="gender"
-                  ref={register({ required: true })}
-				  />
+                <select
+								  id="gender"
+								  name="gender"
+								  ref={register({ required: true })}>
+                  {['M','F'].map((gender) => (
+                    <option key={gender} value={gender}>
+                      {gender}
+                    </option>
+                  ))}
+                </select>
 				  {errors.gender &&
                   <p className="error">Gender is required</p>}
               </div>

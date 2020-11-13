@@ -11,7 +11,7 @@ This project is currently in development. Some functions can be changed over tim
 
 ## Temporarily deployed in:
 
-[**_https://marturia-prod.herokuapp.com/victims_**](https://marturia-prod.herokuapp.com/victims)
+[**_http://testimonies.raisethevoices.org/_**](http://testimonies.raisethevoices.org/)
 
 ## Installation and Setup Instructions
 - React version: 16.13.1
