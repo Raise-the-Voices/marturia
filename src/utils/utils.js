@@ -8,7 +8,7 @@ export function getISOfromDatepicker(date) {
 //date is of type iso string
 export function getMMDDYYYYfromISO(date) {
 	if (date === null) {
-		return "None";
+		return "Unknown";
 	} else {
 		return date.slice(0, 10);
 	}
