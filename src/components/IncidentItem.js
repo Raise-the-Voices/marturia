@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ViewComponent.scss';
 import VictimMedia from '../components/VictimMedia';
-import langs from '../data/languages.js';
+import { langs } from '../data/languages.js';
 import {authContentTypeHeaders} from '../actions/headers'
 
 const IncidentItem = (props) => {

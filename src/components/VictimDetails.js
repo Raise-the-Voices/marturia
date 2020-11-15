@@ -1,6 +1,6 @@
 import React from 'react';
 import './ViewComponent.scss';
-import langs from '../data/languages.js';
+import { langs } from '../data/languages.js';
 
 const VictimDetails = (props) => {
 
