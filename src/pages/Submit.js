@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import MainLayout from '../components/MainLayout';
 import IncidentForm from '../components/IncidentForm';
 import './Submit.scss';
-import langs from '../data/languages.js';
+import { langs, defaultLang } from '../data/languages.js';
 import {authContentTypeHeaders} from '../actions/headers'
 import {constructReportObj, handleFileObject, uploadProfilePhoto} from '../actions/submit'
 import data from '../data/countries.json';
@@ -26,7 +26,7 @@ const Submit = (props) => {
   const { register, trigger, errors, getValues, handleSubmit } = useForm({
     defaultValues: {
     country: "",
-	  language:"",
+	  language: defaultLang.code,
     gender:""
   }})
   
@@ -269,19 +269,17 @@ const SendingModal = () => {
                 />
               </div>
 			  <div className="row">
-                <label htmlFor="gender">Gender*</label>
+                <label htmlFor="gender">Gender</label>
                 <select
 								  id="gender"
 								  name="gender"
-								  ref={register({ required: true })}>
+								  ref={register({ required: false })}>
                   {['M','F'].map((gender) => (
                     <option key={gender} value={gender}>
                       {gender}
                     </option>
                   ))}
                 </select>
-				  {errors.gender &&
-                  <p className="error">Gender is required</p>}
               </div>
 			  <div className="row">
                 <label htmlFor="gender">Place of Birth</label>
@@ -299,15 +297,13 @@ const SendingModal = () => {
 											 ref={register({ required: false })}/>
               </div>
               <div className="row">
-                <label htmlFor="about">About*</label>
+                <label htmlFor="about">About</label>
                 <textarea
                   id="about"
                   name="about"
                   placeholder="Short biography of the victim, including place of birth, ethnicity, age or age range, and profession, if known."
-                  ref={register({ required: true })}
+                  ref={register({ required: false })}
                 />
-                {errors.about &&
-                  <p className="error">About is required</p>}
               </div>
 
                <div className="row">
@@ -323,13 +319,13 @@ const SendingModal = () => {
                     value={item.country}>
                     {item.country}
                   </option>
-                ))}
+                ))} 
               </select>
-							{errors.country &&
+              {errors.country &&
 								<p className="error">Country is required</p>}
               </div>
 			   <div className="row">
-			  				<label htmlFor="language">Language*</label>
+			  				<label htmlFor="language">Language (Default: English)</label>
                 <select
 								  id="language"
 								  name="language"
@@ -342,8 +338,6 @@ const SendingModal = () => {
                   </option>
                 ))}
                 </select>
-					{errors.language &&
-								<p className="error">Language is required</p>}
               </div>
 			   <div className="row">
                 <label htmlFor="profession">Profession</label>
@@ -364,15 +358,13 @@ const SendingModal = () => {
 											 ref={register({ required: false })}/>
               </div>
               <div className="row">
-                <label htmlFor="detainment_location">Last Seen Place*</label>
+                <label htmlFor="detainment_location">Last Seen Place</label>
                 <textarea
                   id="detainment_location"
                   name="detainment_location"
                   placeholder="Location where victim was seen the last time.  Enter unknown if you don't know."
-                  ref={register({ required: true })}
+                  ref={register({ required: false })}
                 />
-							{errors.detainment_location &&
-								<p className="error">Last Seen Place is required</p>}
               </div>
               <div className="row">
                 <label htmlFor="location">Current Location</label>
@@ -386,11 +378,11 @@ const SendingModal = () => {
 								<p className="error">Current location is required</p>}
               </div>
               <div className="row">
-                <label htmlFor="status">Current Status*</label>
+                <label htmlFor="status">Current Status</label>
 								<select
 									id='status'
 									name='status'
-									ref={register({ required: true })}>
+									ref={register({ required: false })}>
 								<option
 									key={'sel'}
 									value='All'>
@@ -404,15 +396,13 @@ const SendingModal = () => {
 									</option>
 								))}
 								</select>
-							{errors.status &&
-								<p className="error">Status is required</p>}
               </div>
 			  <div className="row">
-                <label htmlFor="status">Health Status*</label>
+                <label htmlFor="status">Health Status</label>
 								<select
 									id='health_status'
 									name='health_status'
-									ref={register({ required: true })}>
+									ref={register({ required: false })}>
 								<option
 									key={'sel'}
 									value='All'>
@@ -426,8 +416,6 @@ const SendingModal = () => {
 									</option>
 								))}
 								</select>
-							{errors.health_status &&
-								<p className="error">Health Status is required</p>}
               </div>
 			   <div className="row">
                 <label htmlFor="health_issues">Health Issues</label>
@@ -448,16 +436,14 @@ const SendingModal = () => {
                 />
               </div>
               <div className="row">
-                <label htmlFor="photo">Victim's Photo*</label>
+                <label htmlFor="photo">Victim's Photo</label>
                 <input
                   id="photo"
                   name="photo"
                   type="file"
                   accept="image/jpg,image/jpeg,image/png,image/gif"
-									ref={register({ required: true })}
+									ref={register({ required: false })}
                 />
-				 {errors.photo &&
-                  <p className="error">Photo is required</p>}
               </div>
               <div className="row">
                 <label htmlFor="documents">

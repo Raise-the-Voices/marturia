@@ -740,4 +740,10 @@ const langs = [
     "name": "Zulu"
   }
 ]
-export default langs
+
+const defaultLang =  {
+  "code": "en",
+  "name": "English"
+}
+
+export { langs, defaultLang } 
