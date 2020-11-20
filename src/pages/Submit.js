@@ -137,10 +137,10 @@ const SendingModal = () => {
 				//invalid request
 				alert('invalid request')
 			} else if(data.status === 201) {
-				console.log(form.photo, form.documents)
 				//now add the photos
-								
-				uploadProfilePhoto(form.photo, data.victim.ID, ()=>setPhotoUploaded(true))
+				uploadProfilePhoto(form.photo, data.victim.ID, () => {
+          setPhotoUploaded(true);
+        });
 				
 				let documentCount = form.documents?form.documents.length:0
 				if(documentCount===0)
