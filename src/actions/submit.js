@@ -22,9 +22,10 @@ export const handleFileObject = (id, obj, tag, decreaseFun, uploadCounter) => {
 	}
 }
 
-export const uploadProfilePhoto = (obj, id, successCallback) => {
+export const uploadProfilePhoto = (obj, id, uploadingPhotoFinishedCallback) => {
 	if (!obj || obj.length !== 1) {
-		return
+		uploadingPhotoFinishedCallback();
+		return;
 	}
 	let formData = new FormData()
 	formData.append('myfile', obj[0])
@@ -34,7 +35,9 @@ export const uploadProfilePhoto = (obj, id, successCallback) => {
 	})
 	.then(res => res.json())
 	.then(data => console.log(data))
-	.then(successCallback)
+	.then(() => { 
+		uploadingPhotoFinishedCallback();
+	})
 	.catch(err => console.log(err))
 }
 

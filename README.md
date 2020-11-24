@@ -9,9 +9,9 @@ An application used to collect, display testimonies of victims
 
 This project is currently in development. Some functions can be changed over time.
 
-## Temporarily deployed in:
+## Deployed in:
 
-[**_http://testimonies.raisethevoices.org/_**](http://testimonies.raisethevoices.org/)
+[**_https://testimonies.raisethevoices.org/_**](https://testimonies.raisethevoices.org/)
 
 ## Installation and Setup Instructions
 - React version: 16.13.1
