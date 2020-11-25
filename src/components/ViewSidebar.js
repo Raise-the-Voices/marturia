@@ -1,5 +1,5 @@
 import React from 'react';
-import {getMMDDYYYYfromISO} from '../utils/utils';
+import { convertMonthtoStringFormat} from '../utils/utils';
 
 import './ViewSidebar.scss';
 
@@ -25,7 +25,7 @@ const ViewSidebar = (props) => {
 					<b> Place of Birth </b>
 					<p>  {props.data.place_of_birth} </p>
 					<b> Date of Birth </b>
-					<p> {getMMDDYYYYfromISO(props.data.date_of_birth)} </p>
+					<p> {convertMonthtoStringFormat(props.data.date_of_birth)} </p>
 					<b> Legal Name </b>
 					<p> {props.data.legal_name} </p>
 					<b> Aliases </b>
@@ -35,7 +35,7 @@ const ViewSidebar = (props) => {
 					<b> Gender </b>
 					<p> {props.data.gender} </p>
 					<b> Last Seen Date </b>
-					<p> {getMMDDYYYYfromISO(props.data.last_seen_date)} </p>
+					<p> {convertMonthtoStringFormat(props.data.last_seen_date)} </p>
 					<b> Last Seen Place </b>
 					<p> {props.data.last_seen_place} </p>
 				</div>
@@ -47,9 +47,9 @@ const ViewSidebar = (props) => {
 	let bot = (
 		<div className='sidebar-content'>
 			<b> Entry Created </b>
-			<p>	{getMMDDYYYYfromISO(props.data.CreatedAt)} </p>
+			<p>	{convertMonthtoStringFormat(props.data.CreatedAt)} </p>
 			<b> Last Updated </b>
-			<p> {getMMDDYYYYfromISO(props.data.UpdatedAt)} </p>
+			<p> {convertMonthtoStringFormat(props.data.UpdatedAt)} </p>
 		</div>
 	)
 
