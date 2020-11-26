@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertMonthtoStringFormat} from '../utils/utils';
+import { convertMonthtoStringFormat } from '../utils/utils';
 
 import './ViewSidebar.scss';
 
