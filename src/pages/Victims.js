@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
-import {getMMDDYYYYfromISO} from '../utils/utils';
+import { convertMonthtoStringFormat } from '../utils/utils';
 import './Victims.scss';
 import data from '../data/countries.json';
 import statuses from '../data/status.json';
@@ -71,7 +71,7 @@ const Victims = (props) => {
 						"name": victim.name,
 						"status": victim.current_status,
 					  "location": victim.country,
-						"dob": getMMDDYYYYfromISO(victim.date_of_birth),
+						"dob": convertMonthtoStringFormat(victim.date_of_birth),
 						"url": victim.profile_image_url
 					  })
 				})
@@ -150,7 +150,7 @@ const Victims = (props) => {
 	          </div>
 	          <ul className="list">
 	            {victimList && victimList.length !== 0? victimList.map((item, index) => (
-	              <li key={item.id}>	              
+	              <li key={item.id}>
 					<div className="col">
 	                  {item.url &&
 					  <img className="photo"
