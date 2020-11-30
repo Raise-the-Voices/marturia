@@ -6,7 +6,7 @@ import IncidentForm from '../components/IncidentForm';
 import './Submit.scss';
 import { langs, defaultLang } from '../data/languages.js';
 import {authContentTypeHeaders} from '../actions/headers'
-import {constructReportObj, handleFileObject, uploadProfilePhoto} from '../actions/submit'
+import {constructReportObj, handleFileObject, uploadProfilePhoto, submitIncidentMedia} from '../actions/submit'
 import data from '../data/countries.json';
 import statuses from '../data/status.json';
 import healthStatuses from '../data/health_status.json';
@@ -23,7 +23,7 @@ const Submit = (props) => {
 
 
   const nameRef = useRef();
-  const { register, trigger, errors, getValues, handleSubmit } = useForm({
+  const { register, trigger, errors, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
     country: "",
 	  language: defaultLang.code,
@@ -148,12 +148,15 @@ const SendingModal = () => {
 				else
 					handleFileObject(data.victim.ID, form.documents, "documents", decreaseDocumentUploadingCount, {"count": documentCount })
 				
-				let incidentFileCount = form.incident_files?form.incident_files.length:0
+        let incidentFileCount = form.incident_files?form.incident_files.length:0
 				if(incidentFileCount===0)
 					setIncidentFilesUploaded(true)
 				else
 					handleFileObject(data.victim.Incident[0].ID, form.incident_files, "incidents", decreaseIncidentFilesUploadingCount, {"count": incidentFileCount })
-				//report created, want to redirect to success screens
+        const noOfIncidentLinks = form.incident_links.length;
+          for(let i=0;i<noOfIncidentLinks; i+=1)
+            submitIncidentMedia(form.incident_links[i].mediaurl,data.victim.Incident[0].ID,"incidents_external");
+          //report created, want to redirect to success screens
 				setVictimID(data.victim.ID)				
 			} else {
 				alert('something went wrong')
@@ -458,7 +461,7 @@ const SendingModal = () => {
 									ref={register({ required: false })}
                 />
               </div>
-			 <IncidentForm register={register} errors={errors} trigger={trigger} getValues={getValues}/>
+			 <IncidentForm register={register} setValue={setValue} errors={errors} trigger={trigger} getValues={getValues}/>
               <div className="row">
                 <button type="button" className="btn" onClick={showWarning}>Submit</button>
               </div>
