@@ -310,7 +310,6 @@ const Incident = (props) => {
 }
 
 	const deleteMediaUrl = (media,updateDoneMap) => {
-		debugger;
 		media.updated=false
 		fetch(process.env.REACT_APP_API_BASE + 'incident-medias/'+media.ID, {
 			method: 'DELETE',
@@ -318,7 +317,6 @@ const Incident = (props) => {
 		})
 		.then(res => res.json())
 		.then(data => {
-			debugger;
 			if(updateDoneMap){
 				updateDoneMap.set(media.ID,true)
 				checkAllUpdatesDone(updateDoneMap)
@@ -674,8 +672,6 @@ const Incident = (props) => {
 										  className="mb-8"
 										  placeholder="Links to articles, images or videos related to the incident"
 										/>
-										{console.log("!props.editMode",!props.editMode)}
-										{console.log("!incidentsData[item].ID",!incidentsData[item].ID)}
 										<button type="button" disabled={props.editMode && !incidentsData[item].ID} onClick={(e)=>{onClickBtnAddLink(e,item)}}>Add Link</button>
 										{linkError[item] &&
 											<p className="error">{linkError[item]}</p>}
