@@ -8,15 +8,9 @@ import './IncidentForm.scss';
 import {handleFileObject} from '../actions/submit'
 import {authContentTypeHeaders,authorizationHeaders} from '../actions/headers'
 import {convertIncidentRestToFormData, constructIncidentObj, constructIncidentTranslationObj, submitIncidentMedia} from '../actions/submit'
-import { isValidURL } from "../utils/utils";
+import { isValidURL, doesLinkExistInMediaList } from "../utils/utils";
 
 
-const doesLinkExistInMediaList = (mediaList,link) => {
-	const numberOfMedia = mediaList.length;
-	for(let i=0;i<numberOfMedia;i+=1)
-		if(mediaList[i].mediaurl===link) return true;
-	return false;
-}
 
 const Incident = (props) => {
 
@@ -65,7 +59,7 @@ const Incident = (props) => {
 	}
 	const onClickDeleteExternalLink = (event,incidentIndex,linkIndex) => {
 		event.preventDefault();
-		const newIncidentLinks = incidentsData[incidentIndex].incident_links;
+		const newIncidentLinks = [...incidentsData[incidentIndex].incident_links];
 		const [ deletedMedia ] = newIncidentLinks.splice(linkIndex, 1);
 		setValue("incident_links",newIncidentLinks);
 		const newIncidentsData = {...incidentsData};
@@ -654,7 +648,7 @@ const Incident = (props) => {
 										<ol className="links-list">
 											{
 												incidentsData[item]['incident_links'].map((mediaItem,i)=>
-												<li key={i}>
+												<li key={mediaItem.mediaurl}>
 													<a target="_blank" rel="noopener noreferrer" href={mediaItem.mediaurl}>{mediaItem.mediaurl}</a>
 													<button 
 														title="Remove link"
