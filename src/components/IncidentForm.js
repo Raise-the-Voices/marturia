@@ -68,7 +68,9 @@ const Incident = (props) => {
 		const newIncidentLinks = incidentsData[incidentIndex].incident_links;
 		const [ deletedMedia ] = newIncidentLinks.splice(linkIndex, 1);
 		setValue("incident_links",newIncidentLinks);
-		if(!props.editMode) setIncidentsData({...incidentsData,incident_links:newIncidentLinks});
+		const newIncidentsData = {...incidentsData};
+		newIncidentsData[incidentIndex]['incident_links'] = newIncidentLinks;
+		setIncidentsData(newIncidentsData);
 		if(props.editMode) // if it is edit mode, delete link directly from server
 			deleteMediaUrl(deletedMedia);
 	}
@@ -648,7 +650,7 @@ const Incident = (props) => {
 								}
 									
 									<div className="row">
-										<label>External Links About the Incident</label>
+										<label htmlFor={`incident_link_input_${item}`}>External Links About the Incident</label>
 										<ol className="links-list">
 											{
 												incidentsData[item]['incident_links'].map((mediaItem,i)=>
