@@ -1,15 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useForm } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import MainLayout from '../components/MainLayout';
 import IncidentForm from '../components/IncidentForm';
 import './Submit.scss';
 import { langs, defaultLang } from '../data/languages.js';
 import {authContentTypeHeaders} from '../actions/headers'
-import {constructReportObj, handleFileObject, uploadProfilePhoto, submitIncidentMedia} from '../actions/submit'
+import {constructReportObj, handleFileObject, uploadProfilePhoto, submitIncidentMedia, submitVictimMedia} from '../actions/submit'
 import data from '../data/countries.json';
 import statuses from '../data/status.json';
 import healthStatuses from '../data/health_status.json';
+import { isValidURL, doesLinkExistInMediaList } from "../utils/utils";
 
 const filterAllStatus = (array) => {
     const index = array.indexOf("All");
@@ -32,7 +35,10 @@ const Submit = (props) => {
   
 	const [photoUploaded, setPhotoUploaded] = useState(false)
 	const [documentsUploaded, setDocumentsUploaded] = useState(false)
-	const [incidentFilesUploaded, setIncidentFilesUploaded] = useState(false)
+  const [incidentFilesUploaded, setIncidentFilesUploaded] = useState(false)
+  const [victimLinks,setVictimLinks] = useState([]);
+  const [victimLinkInput,setVictimLinkInput] = useState('');
+	const [victimLinkError,setVictimLinkError] = useState('');
 	
     //state variables to record whether modal component is shown and which popup message to display
     const [warningShown, setWarningShown] = useState(false)
@@ -153,9 +159,13 @@ const SendingModal = () => {
 					setIncidentFilesUploaded(true)
 				else
 					handleFileObject(data.victim.Incident[0].ID, form.incident_files, "incidents", decreaseIncidentFilesUploadingCount, {"count": incidentFileCount })
+        
+		    const noOfVictimLinks = form.victim_links.length;
+        for(let i=0;i<noOfVictimLinks; i+=1)
+          submitVictimMedia(form.victim_links[i].mediaurl,data.victim.ID,"victim_external");
         const noOfIncidentLinks = form.incident_links.length;
-          for(let i=0;i<noOfIncidentLinks; i+=1)
-            submitIncidentMedia(form.incident_links[i].mediaurl,data.victim.Incident[0].ID,"incidents_external");
+        for(let i=0;i<noOfIncidentLinks; i+=1)
+          submitIncidentMedia(form.incident_links[i].mediaurl,data.victim.Incident[0].ID,"incidents_external");
           //report created, want to redirect to success screens
 				setVictimID(data.victim.ID)				
 			} else {
@@ -167,8 +177,51 @@ const SendingModal = () => {
 
   useEffect(() => {
     document.title = 'Submit Testimony - Testimony Database'
-		nameRef.current.focus()		
-  }, [])
+    nameRef.current.focus()		
+  }, []);
+  useEffect(() => {
+    // victim_links is manually registered and updated
+    // because it is an array that is not directly
+    // obtained from an input
+    register('victim_links', { required: false }); 
+		setValue("victim_links",[]);
+  },[register,setValue]);
+
+  const onClickDeleteExternalLink = (event,linkIndex) => {
+		event.preventDefault();
+		const newVictimLinks = [...victimLinks];
+		newVictimLinks.splice(linkIndex, 1);
+		setValue("victim_links",newVictimLinks);
+		setVictimLinks(newVictimLinks);
+  }
+  
+  const handleLinkInputChange = (event) => {
+		setVictimLinkInput(event.target.value);
+  }
+  
+  const onClickBtnAddLink = (e) => {
+		e.preventDefault();
+		const url = victimLinkInput;
+		let newLinkError = '';
+			if(isValidURL(url)){
+				// check if link exists in list already 
+				if(doesLinkExistInMediaList(victimLinks,url)){
+					newLinkError = "Link already exists";
+				}
+				else{
+					newLinkError = '';
+					let newMedia = { mediaurl:url };
+          const newVictimLinks = [...victimLinks, newMedia];
+          setVictimLinks(newVictimLinks);
+          setValue("victim_links",newVictimLinks);
+          setVictimLinkInput('');
+				}
+			}
+			else{
+				newLinkError = "Link is invalid";
+			}
+		setVictimLinkError(newLinkError);
+	}
 
   return (
     <MainLayout>
@@ -438,6 +491,35 @@ const SendingModal = () => {
 				  ref={register({ required: false })}
                 />
               </div>
+              <div className="row">
+										<label htmlFor="victim_link_input">External Links About the Victim</label>
+										<ol className="links-list">
+											{
+												victimLinks.map((mediaItem,i)=>
+												<li key={mediaItem.mediaurl}>
+													<a target="_blank" rel="noopener noreferrer" href={mediaItem.mediaurl}>{mediaItem.mediaurl}</a>
+													<button 
+														title="Remove link"
+														type="button" 
+														className="links-list-item-delete-button" 
+														onClick={e=>onClickDeleteExternalLink(e,i)}>
+														<FontAwesomeIcon icon={faTimes} color="red" />
+													</button>
+												</li>)
+											}
+										</ol>
+										<input
+										  id="victim_link_input"
+										  name="victim_link_input"
+										  value={victimLinkInput}
+										  onChange={(e) => handleLinkInputChange(e)}
+										  className="mb-8"
+										  placeholder="Links to articles, images or videos about the victim"
+										/>
+										<button type="button" onClick={(e)=>{onClickBtnAddLink(e)}}>Add Link</button>
+										{victimLinkError &&
+											<p className="error">{victimLinkError}</p>}
+									</div>
               <div className="row">
                 <label htmlFor="photo">Victim's Photo</label>
                 <input

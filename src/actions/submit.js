@@ -41,7 +41,7 @@ export const uploadProfilePhoto = (obj, id, uploadingPhotoFinishedCallback) => {
 	.catch(err => console.log(err))
 }
 
-const submitVictimMedia = (url, id, tag) => {
+export const submitVictimMedia = (url, id, tag) => {
 	fetch(process.env.REACT_APP_API_BASE + 'victims/' + String(id) + '/victimmedias', {
 		method: "POST",
 		headers: authContentTypeHeaders(),

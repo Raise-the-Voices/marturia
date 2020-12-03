@@ -45,3 +45,11 @@ export function isValidURL(urlString) {
 		'(\\#[-a-z\\d_=,]*)?$', 'i'); // fragment locator
 	return pattern.test(urlString);
 }
+
+
+export const doesLinkExistInMediaList = (mediaList,link) => {
+	const numberOfMedia = mediaList.length;
+	for(let i=0;i<numberOfMedia;i+=1)
+		if(mediaList[i].mediaurl===link) return true;
+	return false;
+}
