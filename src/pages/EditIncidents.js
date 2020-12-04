@@ -7,7 +7,7 @@ import './Submit.scss';
 
 const Submit = (props) => {
 	
-  const { register, errors } = useForm()
+  const { register, errors, setValue } = useForm()
   
   useEffect(() => {
     document.title = 'Edit Incidents - Testimony Database'
@@ -19,7 +19,7 @@ const Submit = (props) => {
       <div className="submit page">
         <div className="wrapper">
        <form>
-			 <IncidentForm victimId={props.match.params.id} editMode={true} register={register} errors={errors}/>
+			 <IncidentForm victimId={props.match.params.id} editMode={true} register={register} setValue={setValue} errors={errors}/>
              </form>         
 		  
         </div>

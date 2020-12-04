@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
 import DataTable from 'react-data-table-component';
 import Popup from 'reactjs-popup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
+import './IncidentForm.scss';
 import {handleFileObject} from '../actions/submit'
 import {authContentTypeHeaders,authorizationHeaders} from '../actions/headers'
-import {convertIncidentRestToFormData, constructIncidentObj, constructIncidentTranslationObj} from '../actions/submit'
+import {convertIncidentRestToFormData, constructIncidentObj, constructIncidentTranslationObj, submitIncidentMedia} from '../actions/submit'
+import { isValidURL, doesLinkExistInMediaList } from "../utils/utils";
 
 
 
@@ -18,7 +22,7 @@ const Incident = (props) => {
 	let register = props.register
 	let trigger = props.trigger
 	let getValues = props.getValues
-	
+	let setValue = props.setValue;
 		
 	const createIncidentObj = () => {
 		return {
@@ -26,9 +30,10 @@ const Incident = (props) => {
 			"incident_location": '',
 			"is_disappearance": false,
 			"incident_narrative": '',
-			"incident_media": ''
+			"incident_media": '',
+			"incident_links": []
 		}
-	}
+	} // incident_links is manually registered because it is not directly entered from an input
 	
 	
 	const [incidents, setIncidents] = useState([0])
@@ -44,8 +49,26 @@ const Incident = (props) => {
 	const [showDeletePopup, setShowDeletePopup] = useState(false);
 
 	const [incidentFilesUploaded, setIncidentFilesUploaded] = useState(false)	
+	const [linksInputs,setLinksInputs] = useState(['']);
+	const [linkError,setLinkError] = useState(['']);
 
-	
+	const onChangeIncidentLinkInput = (event,index) => {
+		const newIncidentLinks = [...linksInputs];
+		newIncidentLinks[index] = event.target.value;
+		setLinksInputs(newIncidentLinks);
+	}
+	const onClickDeleteExternalLink = (event,incidentIndex,linkIndex) => {
+		event.preventDefault();
+		const newIncidentLinks = [...incidentsData[incidentIndex].incident_links];
+		const [ deletedMedia ] = newIncidentLinks.splice(linkIndex, 1);
+		setValue("incident_links",newIncidentLinks);
+		const newIncidentsData = {...incidentsData};
+		newIncidentsData[incidentIndex]['incident_links'] = newIncidentLinks;
+		setIncidentsData(newIncidentsData);
+		if(props.editMode) // if it is edit mode, delete link directly from server
+			deleteMediaUrl(deletedMedia);
+	}
+
 	const checkAllUpdatesDone = (updateDoneMap) => {
 		const arr = Array.from(updateDoneMap.values())
 		const alldone = arr.filter(value => value===false).length===0
@@ -72,7 +95,10 @@ const Incident = (props) => {
 				const res = await response.json()
 				if(res.status === 200) {
 					//console.log(data)
-					incident.medias = res.medias
+					incident.medias = res.medias.filter(item=>item.tag==="incidents"); // Separate medias/external links according to tags
+					const externalLinks = res.medias.filter(item=>item.tag==="incidents_external");
+					incident.incident_links = externalLinks;
+					setValue("incident_links",externalLinks);
 				} else if(res.status === 400) {
 					//params error
 				} else {
@@ -287,8 +313,10 @@ const Incident = (props) => {
 		})
 		.then(res => res.json())
 		.then(data => {
-			updateDoneMap.set(media.ID,true)
-			checkAllUpdatesDone(updateDoneMap)
+			if(updateDoneMap){
+				updateDoneMap.set(media.ID,true)
+				checkAllUpdatesDone(updateDoneMap)
+			}
 			if(data.status === 400) {
 				//params error				
 			} else if(data.status === 200) {
@@ -309,6 +337,10 @@ const Incident = (props) => {
 	if(props.editMode)
 	{
 		loadIncidents().then(loadAllIncidentTranslations).then(fetchMedias).then(finishQuery)
+	}
+	else {
+		register('incident_links', { required: false });
+		setValue("incident_links",[]);
 	}
   }, [reloadToggle])
  
@@ -447,6 +479,45 @@ const Incident = (props) => {
 		e.preventDefault()
 		setShowDeletePopup(true)
 	}
+	const setNewMedia = (newMedia,incidentIndex) => {
+		const newIncidentsData = {...incidentsData};
+		const newIncidentLinks = [...newIncidentsData[incidentIndex]['incident_links'], newMedia];
+		newIncidentsData[incidentIndex]['incident_links'] = newIncidentLinks;
+		setValue("incident_links",newIncidentLinks);
+		const newIncidentLinksInputsValues = [...linksInputs];
+		newIncidentLinksInputsValues[incidentIndex] = '';
+		setLinksInputs(newIncidentLinksInputsValues);
+		setIncidentsData(newIncidentsData);
+	}
+	const onClickBtnAddLink = (e,index) => {
+		e.preventDefault();
+		const url = linksInputs[index];
+		const newLinkError = [...linkError];
+			if(isValidURL(url)){
+				// check if link exists in list already 
+				if(doesLinkExistInMediaList(incidentsData[index]['incident_links'],url)){
+					newLinkError[index] = "Link already exists";
+				}
+				else{
+					newLinkError[index] = '';
+					let newMedia = { mediaurl:url };
+					if(props.editMode) // if it is edit mode, add link directly to server
+						{
+							submitIncidentMedia(url,incidentsData[index].ID,"incidents_external").then(addedMedia=>{
+								setNewMedia(addedMedia,index);
+							});
+						}
+						else{
+							setNewMedia(newMedia,index);
+						}
+				}
+			}
+			else{
+				newLinkError[index] = "Link is invalid";
+			}
+		
+		setLinkError(newLinkError);
+	}
 
 	const deletePopup = () => {
 		return (
@@ -490,6 +561,7 @@ const Incident = (props) => {
 									<div className='row'>									
 										{props.editMode && 
 										<button
+											type="button"
 											onClick={(e) => deleteIncident(e, item)}
 											className='incident-delete-button'>
 											Delete Incident </button>
@@ -565,27 +637,46 @@ const Incident = (props) => {
 										customStyles={customStyles}
 										clearSelectedRows={toggleClearRows}
 									 />
-									 <button className="btn-left" onClick={(e) =>clickBtnDelete(e) }> Delete Incident URLs </button>
+									 <button type="button" className="btn-left" onClick={(e) =>clickBtnDelete(e) }> Delete Incident URLs </button>
 									 {deletePopupInstance}
 									
 									</div>
 								}
 									
-									<div className='row'>
-										<label htmlFor='incident_media'> Additional Media</label>
-										<textarea
-											id={"incident_media"}
-											name={"incident_media"}
-											value={incidentsData[item]['incident_media']  || (getValues && getValues('incident_media'))}
-											onChange={(e) => handleChange(e, item)}											
-											placeholder="Images or videos relating to the incident."
-											ref={register({ required: false })}/>
+									<div className="row">
+										<label htmlFor={`incident_link_input_${item}`}>External Links About the Incident</label>
+										<ol className="links-list">
+											{
+												incidentsData[item]['incident_links'].map((mediaItem,i)=>
+												<li key={mediaItem.mediaurl}>
+													<a target="_blank" rel="noopener noreferrer" href={mediaItem.mediaurl}>{mediaItem.mediaurl}</a>
+													<button 
+														title="Remove link"
+														type="button" 
+														className="links-list-item-delete-button" 
+														onClick={e=>onClickDeleteExternalLink(e,item,i)}>
+														<FontAwesomeIcon icon={faTimes} color="red" />
+													</button>
+												</li>)
+											}
+										</ol>
+										<input
+										  id={`incident_link_input_${item}`}
+										  name={`incident_link_input_${item}`}
+										  value={linksInputs[item]}
+										  onChange={(e) => onChangeIncidentLinkInput(e,item)}
+										  className="mb-8"
+										  placeholder="Links to articles, images or videos related to the incident"
+										/>
+										<button type="button" disabled={props.editMode && !incidentsData[item].ID} onClick={(e)=>{onClickBtnAddLink(e,item)}}>Add Link</button>
+										{linkError[item] &&
+											<p className="error">{linkError[item]}</p>}
 									</div>
 								</div>
 							))}							
 							{props.editMode && 
 							<div className='row'>
-								<button onClick={(e) => addIncident(e)} className='btn-left'> Add Incident </button>
+								<button type="button" onClick={(e) => addIncident(e)} className='btn-left'> Add Incident </button>
 							</div>
 							}
 		

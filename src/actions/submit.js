@@ -41,7 +41,7 @@ export const uploadProfilePhoto = (obj, id, uploadingPhotoFinishedCallback) => {
 	.catch(err => console.log(err))
 }
 
-const submitVictimMedia = (url, id, tag) => {
+export const submitVictimMedia = (url, id, tag) => {
 	fetch(process.env.REACT_APP_API_BASE + 'victims/' + String(id) + '/victimmedias', {
 		method: "POST",
 		headers: authContentTypeHeaders(),
@@ -52,15 +52,16 @@ const submitVictimMedia = (url, id, tag) => {
 	.catch(err => console.log(err))
 }
 
-const submitIncidentMedia = (url, id, tag) => {
-	fetch(process.env.REACT_APP_API_BASE + 'incidents/' + String(id) + '/incident-medias', {
+export const submitIncidentMedia = (url, id, tag) => {
+	const addedMedia = fetch(process.env.REACT_APP_API_BASE + 'incidents/' + String(id) + '/incident-medias', {
 		method: "POST",
 		headers: authContentTypeHeaders(),
 		body: JSON.stringify({date_of_media: "1990-09-22T22:42:31+07:00", mediaurl: url, tag: tag})
 	})
 	.then(res => res.json())
-	.then(data => console.log(data))
-	.catch(err => console.log(err))
+	.then(data => data.incident_media)
+	.catch(err => { console.log(err); return null; })
+	return addedMedia;
 }
 
 export const uploadMedia = (file, id, tag, decreaseFun, uploadCounter) => {

@@ -1,7 +1,6 @@
-@import '../styles/variables';
+@import "../styles/variables";
 
 .mediaTableDiv {
-	
 }
 
 .submit.page {
@@ -19,25 +18,25 @@
       width: 80%;
     }
 
-	.success {
-		color: green;
-		font-weight: bold;
-	}
-	.error {
-		color: red;
-		font-weight: bold;
-	}
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
     .btn {
       align-self: flex-end;
     }
 
-		.incident-delete-button {
-			background-color: red;
-			border: none;
-			border-radius: 4px;
-			margin-bottom: 6px;
-			cursor: pointer;
-		}
+    .incident-delete-button {
+      background-color: red;
+      border: none;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
 
     .row.radio {
       flex-direction: row;
@@ -55,8 +54,7 @@
       }
 
       .radio-label {
-        
-		display: flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         margin-right: 10px;
@@ -64,8 +62,27 @@
 
       input {
         margin-right: 10px;
-		min-width: 10px;
+        min-width: 10px;
       }
+    }
+  }
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+
+.links-list {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  li:last-child {
+    @extend .mb-8;
+  }
+  &-item {
+    &-delete-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
     }
   }
 }
