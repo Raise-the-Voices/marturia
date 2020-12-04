@@ -5,6 +5,7 @@ import './ViewSidebar.scss';
 
 const ViewSidebar = (props) => {
 	console.log(props.data)
+	const profile_image_url = props.data.profile_image_url;
 	let top = (
 		<React.Fragment>
 			<div className='sidebar-header-1'>
@@ -12,10 +13,10 @@ const ViewSidebar = (props) => {
 			</div>
 			<div className='sidebar-body'>
 				<div className='sidebar-pic'>
-					   <img className="photo"
-	                    src={props.data.profile_image_url}
+					   {profile_image_url ? <img className="photo"
+	                    src={profile_image_url}
 	                    alt="victim"
-	                  />
+	                  /> : "No photo available"}
 				</div>
 				<div className='sidebar-header-2'>
 					<p> {props.data.name} </p>
