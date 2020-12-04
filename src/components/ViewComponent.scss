@@ -1,42 +1,45 @@
-.victim-item-container {	
-	flex-basis: 60%;
-	margin-right: 1em;
+.victim-item-container {
+  flex-basis: 60%;
+  margin-right: 1em;
 }
 
-.view-item {		
+.view-item {
 }
-
-
-
 
 .view-title {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	border-bottom: 1px solid black;
-	padding-bottom: 5px;
-	margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  background-color: cadetblue;
+  padding: 5px;
 }
 .view-item-title {
-	font-weight: bold;
-	user-select: none;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	-o-user-select: none;
+  font-weight: bold;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }
-	
 
 .incident-container {
-	margin-top: 10px;
-	border: thin solid black;
-	border-radius: 4px;
-	padding: 10px 10px 10px 10px;
+  margin-top: 10px;
+  border: thin solid black;
+  border-radius: 4px;
+  padding: 10px 10px 10px 10px;
 
-	.incident-top {
-		border-bottom: thin solid black;
-	}
+  .incident-top {
+    border-bottom: thin solid black;
+  }
 }
 
-.details-container {	
+.white-space-pre-line {
+  white-space: pre-line;
+}
+
+.incident-id-title {
+  color: cadetblue;
 }

@@ -59,17 +59,17 @@ const IncidentItem = (props) => {
 		const incTranslationDivs = incTranslations.map( (incTrans) =>
 
 			<div key={incTrans.ID} className='incident-top'>
-				<p> Language: {langs.filter(lang => lang.code === incTrans.language)[0].name} </p>
-				<p> Narrative of Incident: {incTrans.narrative_of_incident} </p>
+				<p> <b>Language:</b> {langs.filter(lang => lang.code === incTrans.language)[0].name} </p>
+				<p> <b>Narrative of Incident:</b></p> <p className="white-space-pre-line"> {incTrans.narrative_of_incident} </p>
 {/*				<p> Current Status Summary: {incTrans.current_status_summary}</p>*/}
 			</div>
 			)
 		content =  (
 		<div>
 			<div>
-				<p> <b>Incident ID #{props.data.ID}</b> </p>
-				<p> Date of Incident: {convertMonthtoStringFormat(props.data.date_of_incident)}</p>
-				<p> Location: {props.data.location} </p>
+				<p> <b className="incident-id-title">Incident ID #{props.data.ID}</b> </p>
+				<p> <b>Date of Incident:</b> {convertMonthtoStringFormat(props.data.date_of_incident)}</p>
+				<p> <b>Location:</b> {props.data.location} </p>
 {/*				<p> Disappearance: {props.data.is_disappearance}</p>
 				<p> Direct Testimony: </p>
 				<p> Discovery: </p> */}
