@@ -3,13 +3,13 @@
 
 .admin-wrapper{
 	display: flex;
-	width: "90%" 
+	width: "90%"
 }
 
 .admin-choice-container {
 	border: 1px solid darkgray;
 	border-radius: 4px;
-	
+
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 	flex:1 0 200px;
@@ -38,6 +38,7 @@
 	flex-direction: column;
 	flex: 4;
 	padding: 10px;
+	overflow: scroll;
 }
 
 .userobj-container {
