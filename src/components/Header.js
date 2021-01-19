@@ -11,18 +11,18 @@ const Header = () => {
         <nav className="main-navigation">
           <ul>
             <li>
-              <NavLink to="/victims" activeClassName="active">Victims</NavLink>
+              <NavLink to="/" className="header-btn-hover" activeClassName="active">Victims</NavLink>
             </li>            
 			{tokenIsStillValid() && 
 			<li>
-              <NavLink to="/submit" activeClassName="active">Submit</NavLink>
+              <NavLink to="/submit" className="header-btn-hover" activeClassName="active">Submit</NavLink>
             </li>
 			}			
             <li>
-              <NavLink exact to="/admin" activeClassName="active">Admin</NavLink>
+              <NavLink exact to="/admin" className="header-btn-hover" activeClassName="active">Admin</NavLink>
             </li>
 			<li>
-              <NavLink exact to="/" activeClassName="active">About</NavLink>
+              <NavLink exact to="/home" className="header-btn-hover" activeClassName="active">About</NavLink>
             </li>
           </ul>
         </nav>
