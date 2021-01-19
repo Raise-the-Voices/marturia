@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useForm } from 'react-hook-form';
+import { Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import MainLayout from '../components/MainLayout';
@@ -12,7 +13,7 @@ import {constructReportObj, handleFileObject, uploadProfilePhoto, submitIncident
 import data from '../data/countries.json';
 import statuses from '../data/status.json';
 import healthStatuses from '../data/health_status.json';
-import { isValidURL, doesLinkExistInMediaList } from "../utils/utils";
+import { isValidURL, doesLinkExistInMediaList, tokenIsStillValid } from "../utils/utils";
 
 const filterAllStatus = (array) => {
     const index = array.indexOf("All");
@@ -176,15 +177,17 @@ const SendingModal = () => {
   }
 
   useEffect(() => {
-    document.title = 'Submit Testimony - Testimony Database'
-    nameRef.current.focus()		
+    if (tokenIsStillValid()) {
+      nameRef.current.focus()
+    }
+    document.title = 'Submit Testimony - Testimony Database'	
   }, []);
   useEffect(() => {
     // victim_links is manually registered and updated
     // because it is an array that is not directly
     // obtained from an input
     register('victim_links', { required: false }); 
-		setValue("victim_links",[]);
+    setValue("victim_links",[]);
   },[register,setValue]);
 
   const onClickDeleteExternalLink = (event,linkIndex) => {
@@ -221,8 +224,12 @@ const SendingModal = () => {
 				newLinkError = "Link is invalid";
 			}
 		setVictimLinkError(newLinkError);
-	}
+  }
 
+  if(!tokenIsStillValid()) {
+    return <Redirect to='/login'/>
+  }
+  
   return (
     <MainLayout>
       <div className="submit page">
