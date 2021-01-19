@@ -32,12 +32,12 @@ const Routes = () => (
       <Route exact path='/' component={Victims}/>
       <Route path='/home' component={Home}/>
       <Route path='/submit' component={Submit}/>
-	  <Route path='/login' component={Login}/>
-	  <Route path='/reqreset' component={ReqResetPW}/>
-	  <Route path='/reset' component={ResetPW}/>
-	  <Route path='/admin' component={AdminPanel}/>
-	  <Route path='/view/:id' component={ViewVictim}/>
-	  <Route path='/editincidents/:id' component={EditIncidents}/>
+	    <Route path='/login' component={Login}/>
+	    <Route path='/reqreset' component={ReqResetPW}/>
+	    <Route path='/reset' component={ResetPW}/>
+	    <Route path='/admin' component={AdminPanel}/>
+	    <Route path='/view/:id' component={ViewVictim}/>
+	    <Route path='/editincidents/:id' component={EditIncidents}/>
       <Route component={NotFound}/>
     </Switch>
   </Router>
