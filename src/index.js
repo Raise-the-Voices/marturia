@@ -29,8 +29,8 @@ const store = createStore(rootReducer, composeWithDevTools());
 const Routes = () => (
   <Router>
     <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route path='/victims' component={Victims}/>
+      <Route exact path='/' component={Victims}/>
+      <Route path='/home' component={Home}/>
       <Route path='/submit' component={Submit}/>
 	  <Route path='/login' component={Login}/>
 	  <Route path='/reqreset' component={ReqResetPW}/>

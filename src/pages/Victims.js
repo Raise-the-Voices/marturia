@@ -90,7 +90,7 @@ const Victims = (props) => {
 
 	if (isSearch) {
 		let qstr = constructQStr(name, country, status);
-		content = (<Redirect to={'/victims' + qstr}/>)
+		content = (<Redirect to={'/' + qstr}/>)
 		window.location.reload()
 	} else {
 		content = (
