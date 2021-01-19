@@ -1,7 +1,9 @@
 import React, {useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { Redirect } from 'react-router-dom'
 import MainLayout from '../components/MainLayout';
 import IncidentForm from '../components/IncidentForm';
+import { tokenIsStillValid } from "../utils/utils";
 import './Submit.scss';
 
 
@@ -13,6 +15,10 @@ const Submit = (props) => {
     document.title = 'Edit Incidents - Testimony Database'
 		
   }, []);
+
+  if(!tokenIsStillValid()) {
+    return <Redirect to='/login'/>
+  }
 
   return (
     <MainLayout>	
