@@ -11,20 +11,32 @@ import { langs, defaultLang } from '../data/languages.js';
 import {authContentTypeHeaders} from '../actions/headers'
 import {constructReportObj, handleFileObject, uploadProfilePhoto, submitIncidentMedia, submitVictimMedia} from '../actions/submit'
 import data from '../data/countries.json';
-import statuses from '../data/status.json';
-import healthStatuses from '../data/health_status.json';
 import { isValidURL, doesLinkExistInMediaList, tokenIsStillValid } from "../utils/utils";
 
-const filterAllStatus = (array) => {
-    const index = array.indexOf("All");
-	let filteredArray = array.slice();
-	filteredArray.splice(index, 1);
-	return filteredArray;
-};
-const statusWithoutAll = filterAllStatus(statuses.status);
+// const filterAllStatus = (array) => {
+//   const index = array.indexOf("All");
+// 	let filteredArray = array.slice();
+// 	filteredArray.splice(index, 1);
+// 	return filteredArray;
+// };
+// const statusWithoutAll = filterAllStatus(statuses.status);
 
 const Submit = (props) => {
 
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_BASE + 'options', {
+      method: "GET",
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      
+      const returnedData = data['options-list'].filter(option => option.group === 'current_status');
+      const returnedDataHealth = data['options-list'].filter(option => option.group === 'health_status');
+      setOption(returnedData);
+      setOptionHealth(returnedDataHealth);
+    });
+  }, []);
 
   const nameRef = useRef();
   const { register, trigger, errors, getValues, handleSubmit, setValue } = useForm({
@@ -39,11 +51,13 @@ const Submit = (props) => {
   const [incidentFilesUploaded, setIncidentFilesUploaded] = useState(false)
   const [victimLinks,setVictimLinks] = useState([]);
   const [victimLinkInput,setVictimLinkInput] = useState('');
-	const [victimLinkError,setVictimLinkError] = useState('');
+  const [victimLinkError,setVictimLinkError] = useState('');
+  const [statusWithoutAll, setOption] = useState(null);
+  const [healthStatuses, setOptionHealth] = useState(null);
 	
-    //state variables to record whether modal component is shown and which popup message to display
-    const [warningShown, setWarningShown] = useState(false)
-    const [showModal, setShowModal] = useState(false)
+  //state variables to record whether modal component is shown and which popup message to display
+  const [warningShown, setWarningShown] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 	const [submitting, setSubmitting] = useState(false)
 
 	const [victimID, setVictimID] = useState(-1)
@@ -111,9 +125,6 @@ const SendingModal = () => {
 
 	 }
  }
- 
- 
-
 
   const decreaseDocumentUploadingCount = (counter) =>{	  
 	  counter.count -= 1
@@ -451,11 +462,11 @@ const SendingModal = () => {
 									value='All'>
 									Select Status
 								</option>
-								{statusWithoutAll.map(item => (
+								{statusWithoutAll?.map(item => (
 									<option
-										key={item}
-										value={item}>
-										{item}
+										key={item.title}
+										value={item.title}>
+										{item.title}
 									</option>
 								))}
 								</select>
@@ -471,11 +482,11 @@ const SendingModal = () => {
 									value='All'>
 									Select Status
 								</option>
-								{healthStatuses.status.map(item => (
+								{healthStatuses?.map(item => (
 									<option
-										key={item}
-										value={item}>
-										{item}
+										key={item.title}
+										value={item.title}>
+										{item.title}
 									</option>
 								))}
 								</select>
