@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import { convertMonthtoStringFormat } from '../utils/utils';
 import './Victims.scss';
 import data from '../data/countries.json';
-import statuses from '../data/status.json';
 
 const queryString = require('query-string');
 
@@ -14,6 +13,7 @@ const Victims = (props) => {
 	const [name, setName] = useState('');
 	const [status, setStatus] = useState('');
 	const [country, setCountry] = useState('Select Country');
+	const [statuses, setOption] = useState(null);
 
 
 	const constructQStr = (name, country, status) => {
@@ -40,7 +40,7 @@ const Victims = (props) => {
 		return qstr
 	}
 
-  useEffect(() => {
+	useEffect( () => {
     document.title = 'Victims List - Testimony Database';
 
 		//for partially loading the reports if the number of reports is too large
@@ -55,17 +55,34 @@ const Victims = (props) => {
 		setStatus(query.status?query.status:'')
 		setName(query['victim-name']?query['victim-name']:'')
 		let qstr = constructQStr(query['victim-name'], query.country, query.status);
-		//console.log(qstr)
-		fetch(process.env.REACT_APP_API_BASE + 'victims'+ qstr)
-		.then(res => res.json())
-		.then(data => {
-			if(data.status === 400) {
+		Promise.all([
+			fetch(process.env.REACT_APP_API_BASE + 'options', {
+				method: "GET",
+			}),
+			fetch(process.env.REACT_APP_API_BASE + 'victims'+ qstr)
+		]).then(function (responses) {
+			// Get a JSON object from each of the responses
+			return Promise.all(responses.map(function (response) {
+				return response.json();
+			}));
+		}).then(function (data) {
+
+			// console.log(data);
+
+			// DATA[0]
+			// console.log(data[0]);
+			const returnedData = data[0]['options-list'].filter(option => option.group === 'current_status');
+			// console.log(returnedData);
+			setOption(returnedData);
+
+			// DATA[1] 
+			if(data[1].status === 400) {
 				//params error
 				alert('parameter error')
-			} else if(data.status === 200) {
+			} else if(data[1].status === 200) {
 				let vl = []
-				console.log(data)
-				data.victim.forEach((victim) => {
+				console.log(data[1])
+				data[1].victim.forEach((victim) => {
 					vl.push({
 						"id": victim.ID,
 						"name": victim.name,
@@ -73,19 +90,20 @@ const Victims = (props) => {
 					  "location": victim.country,
 						"dob": convertMonthtoStringFormat(victim.date_of_birth),
 						"url": victim.profile_image_url
-					  })
+					})
 				})
 				setVictimList(vl)
 			} else {
 				//something went wrong
 				alert('something went wrong')
 			}
+		}).catch(function (error) {
+			// if there's an error, log it
+			console.log(error);
+		});
 
-		})
-		//might want to redirect to an error page becuase nothign will show
-		.catch(err => console.log(err))
-  }, []);
-
+	}, []);
+	
 	let content;
 
 	if (isSearch) {
@@ -117,11 +135,11 @@ const Victims = (props) => {
 									value='all'>
 									Select Status
 								</option>
-								{statuses.status.map(item => (
+								{statuses?.map(item => (
 									<option
-										key={item}
-										value={item}>
-										{item}
+										key={item.title}
+										value={item.title}>
+										{item.title}
 									</option>
 								))}
 								</select>
