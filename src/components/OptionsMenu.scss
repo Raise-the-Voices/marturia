@@ -1,0 +1,30 @@
+.container {
+  columns: 3 auto;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 12px;
+}
+
+.list {
+  height: 18px;
+}
+
+.btn-option {
+  font-size: small;
+}
+
+.row-title {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #171717;
+}
+
+.form-error {
+  color: #ffffff;
+  margin: 3px 0 0 0;
+
+  &.radio {
+    margin: 0;
+  }
+}
