@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import ViewAllUsers from '../components/Viewallusers';
 import CreateUser from '../components/Createuser';
 import SetReportStatus from '../components/SetReportStatus';
+import OptionMenu from '../components/OptionsMenu';
 import {tokenIsStillValid} from '../utils/utils';
 
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/admin/3",
     sidebar: () => <div>Manage Reports</div>,
     main: () => <SetReportStatus/>
+  },
+  {
+    path: "/admin/4",
+    sidebar: () => <div>Options Menu</div>,
+    main: () => <OptionMenu/>
   }
 ];
 
@@ -53,8 +59,13 @@ return(
             </li>           
 		 } 
 			<li>
-              <Link to="/admin/3">Manage Reports</Link>
-            </li>
+        <Link to="/admin/3">Manage Reports</Link>
+      </li>
+      {localStorage.getItem('role')==='admin' &&
+        <li>
+          <Link to="/admin/4">Options Menu</Link>
+        </li>           
+		  } 
 		  <li>
 			<Link onClick={logout} to="">Logout</Link>
 		   </li>
