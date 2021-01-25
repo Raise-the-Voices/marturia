@@ -63,7 +63,6 @@ export function isValidURL(urlString) {
 	return pattern.test(urlString);
 }
 
-
 export const doesLinkExistInMediaList = (mediaList,link) => {
 	const numberOfMedia = mediaList.length;
 	for(let i=0;i<numberOfMedia;i+=1)

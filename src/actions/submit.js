@@ -1,5 +1,5 @@
-import {authContentTypeHeaders} from './headers'
-import {getISOfromDatepicker, getMMDDYYYYfromISO} from '../utils/utils'
+import { authContentTypeHeaders } from './headers'
+import { getISOfromDatepicker, getMMDDYYYYfromISO } from '../utils/utils'
 
 export const submitVictimTranslation = (victimTranslationObj, id) => {
 	fetch(process.env.REACT_APP_API_BASE + 'victims/' + String(id) + '/victim-translations', {

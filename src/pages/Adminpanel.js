@@ -4,12 +4,10 @@ import AdminMenu from '../components/AdminMenu';
 
 //e@e.e
 const AdminPanel = () => {
-
 	return (
 		<MainLayout>
 			<div>
-				<AdminMenu></AdminMenu>
-            		
+				<AdminMenu></AdminMenu>		
 			</div>
 		</MainLayout>
 	)

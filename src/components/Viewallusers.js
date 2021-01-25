@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {authorizationHeaders} from '../actions/headers';
+import React, { useEffect, useState } from 'react';
+import { authorizationHeaders } from '../actions/headers';
 import DataTable from 'react-data-table-component';
 import Popup from 'reactjs-popup';
 import './Admin.scss';
@@ -12,6 +12,7 @@ const customStyles = {
     },
   },  
 };
+
 const ViewAllUsers = (props) => {
 	const [users, setUsers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -166,8 +167,7 @@ const ViewAllUsers = (props) => {
 			selector:'DeletedAt',
 			sortable:true
 		}
-		
-	 ]
+	]
 		
 	const deletePopupInstance = deletePopup();
 	let content = (

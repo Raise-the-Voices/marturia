@@ -4,8 +4,7 @@ import ViewAllUsers from '../components/Viewallusers';
 import CreateUser from '../components/Createuser';
 import SetReportStatus from '../components/SetReportStatus';
 import OptionMenu from '../components/OptionsMenu';
-import {tokenIsStillValid} from '../utils/utils';
-
+import { tokenIsStillValid } from '../utils/utils';
 
 const routes = [
   {
@@ -29,7 +28,6 @@ const routes = [
     main: () => <OptionMenu/>
   }
 ];
-
 
 const AdminMenu = () => {
 

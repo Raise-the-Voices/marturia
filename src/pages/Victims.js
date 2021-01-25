@@ -15,10 +15,8 @@ const Victims = (props) => {
 	const [country, setCountry] = useState('Select Country');
 	const [statuses, setOption] = useState(null);
 
-
 	const constructQStr = (name, country, status) => {
 		let qstr = '?report-state=published&sort=created_at desc&';
-
 
 		if(name) {
 			qstr += "victim-name=" + name + "&";
@@ -67,10 +65,7 @@ const Victims = (props) => {
 			}));
 		}).then(function (data) {
 
-			// console.log(data);
-
 			// DATA[0]
-			// console.log(data[0]);
 			const returnedData = data[0]['options-list'].filter(option => option.group === 'current_status');
 			// console.log(returnedData);
 			setOption(returnedData);

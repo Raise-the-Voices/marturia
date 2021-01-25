@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 const IsImage = (fileName) => {		
 	return 	fileName.includes(".jpeg") || fileName.includes(".JPEG") ||
 			fileName.includes(".jpg") || fileName.includes(".JPG") ||
@@ -10,15 +8,12 @@ const IsImage = (fileName) => {
 }
 
 const VictimMedia = (props) => {
-
 	if(!props.data)
 		return (
 		<div className='medias-container'>
 			<p> Loading ... </p>
 		</div>
 		)
-	
-	
 	return (
 		<div className='medias-container'>	
 		{props.data.map((value, index) => {
@@ -36,7 +31,6 @@ const VictimMedia = (props) => {
 				</div>)
 		
 		})}
-		
 		</div>
 	)
 }

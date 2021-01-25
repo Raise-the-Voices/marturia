@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import {Motion, spring} from 'react-motion';
+import { Motion, spring } from 'react-motion';
 import './ViewComponent.scss';
 
 const ViewItem = (props) => {

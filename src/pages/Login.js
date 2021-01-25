@@ -2,7 +2,7 @@ import React, {useRef, useEffect, useState} from 'react';
 import MainLayout from '../components/MainLayout';
 import { Link, Redirect } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
-import {tokenIsStillValid} from '../utils/utils'
+import { tokenIsStillValid } from '../utils/utils'
 import './User.scss';
 
 const Login = () => {
@@ -38,7 +38,7 @@ const Login = () => {
 	    } else if(data.status === 200) {
 		    localStorage.setItem('token', data.token)
 		    localStorage.setItem('expiration', data.expires)
-			localStorage.setItem('role', data.role)
+				localStorage.setItem('role', data.role)
 				window.location.reload()
 	    } else {
 		    setErr('Something went wrong')

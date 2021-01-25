@@ -454,7 +454,7 @@ const Incident = (props) => {
 			selector:'mediaurl',
 			sortable:true,
 			wrap: true,
-			cell: row => <div className='mediaTableDiv'><a>{row.mediaurl}<div><img src={row.mediaurl.replace('.jpg','_thumb.jpg').replace('.JPG','_thumb.JPG').replace('.png','_thumb.png').replace('.PNG','_thumb.PNG').replace('.jpeg','_thumb.jpeg').replace('.JPEG','_thumb.JPEG').replace('.gif','_thumb.gif').replace('.GIF','_thumb.GIF')}/></div></a></div>
+			cell: row => <div><a>{row.mediaurl}<div><img src={row.mediaurl.replace('.jpg','_thumb.jpg').replace('.JPG','_thumb.JPG').replace('.png','_thumb.png').replace('.PNG','_thumb.PNG').replace('.jpeg','_thumb.jpeg').replace('.JPEG','_thumb.JPEG').replace('.gif','_thumb.gif').replace('.GIF','_thumb.GIF')}/></div></a></div>
 		}
 	 ]
 	 

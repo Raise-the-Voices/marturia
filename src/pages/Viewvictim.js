@@ -8,8 +8,6 @@ import VictimDetails from '../components/VictimDetails';
 import {authContentTypeHeaders} from '../actions/headers';
 import './View.scss';
 
-
-
 const ViewVictim = (props) => {
 	const [vicData, setVicData] = useState(null);
 	const [incidents, setIncidents] = useState(null);
@@ -106,8 +104,8 @@ const ViewVictim = (props) => {
 							category={"Victim Details"}
 							shown={shown}
 							setShown={setShown}
-							info={<VictimDetails data={translations}/>}							
-							/>
+							info={<VictimDetails data={translations}/>}/>
+							
 						<ViewVictimItem
 						 	category={"Victim Media"}
 							shown={shown}

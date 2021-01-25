@@ -11,7 +11,6 @@ const IncidentItem = (props) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [medias, setMedias] = useState(null);
 
-
 	useEffect(() => {
 
 		fetch(process.env.REACT_APP_API_BASE + 'incident-translations?idincident=' + String(props.data.ID))
@@ -52,8 +51,6 @@ const IncidentItem = (props) => {
 			<p> Loading ... </p>
 		</div>)
 
-
-
 	if(isLoaded)
 	{
 		const incTranslationDivs = incTranslations.map( (incTrans) =>
@@ -82,7 +79,5 @@ const IncidentItem = (props) => {
 	}
 	return content
 }
-
-
 
 export default IncidentItem

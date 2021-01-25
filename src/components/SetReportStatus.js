@@ -21,7 +21,6 @@ const SetReportStatus = (props) => {
 	const [selectedRows, setSelectedRows] = useState([]);		
 	const [toggleClearRows, setToggleClearRows] = useState(false);
 	
-
 	const checkAllUpdatesDone = (updateDoneMap) => {
 		const arr = Array.from(updateDoneMap.values())
 		const alldone = arr.filter(value => value===false).length===0
@@ -34,7 +33,6 @@ const SetReportStatus = (props) => {
 		}
 	}
 		
-	
 	const toggleReportState = (report,updateDoneMap) => {
 		
 		fetch(process.env.REACT_APP_API_BASE + 'reports/'+report.ID, {

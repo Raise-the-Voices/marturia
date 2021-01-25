@@ -16,33 +16,32 @@
     letter-spacing: 0.08rem;
 
 
-	.logo {
-      flex: 1;
-      color: $white-1;
-	  font-size: 0.8em;
-      background: rgb(0, 0, 0); // fallback
-      background: rgba(0, 0, 0, 0.55);
-      text-align: center;
-      text-transform: uppercase;
-      align-self: stretch;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .logo {
+        flex: 1;
+        color: $white-1;
+        font-size: 0.8em;
+        background: rgb(0, 0, 0); // fallback
+        background: rgba(0, 0, 0, 0.55);
+        text-align: center;
+        text-transform: uppercase;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      p {
-        margin: 0;
-        padding: 0;
+        p {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    @media all and (min-width: 50em) {
+      .logo {
+        flex: 1 0 200px;
+        max-width: 200px;
+        font-size: 1.2em;
+        line-height: 1.4;
       }
     }
-	@media all and (min-width: 50em) {
-	.logo {
-	  flex: 1 0 200px;
-      max-width: 200px;
-       font-size: 1.2em;
-      line-height: 1.4;
-
-	  }
-	}
   }
 }
 
@@ -76,10 +75,10 @@
         }
       }
     }
-	@media all and (min-width: 30em) {
-	li {
-      font-size: 0.95em;
-	  }
-	}
+    @media all and (min-width: 30em) {
+      li {
+          font-size: 0.95em;
+      }
+    }
   }
 }
