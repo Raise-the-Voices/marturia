@@ -375,7 +375,7 @@ const SendingModal = () => {
                 <textarea
                   id="about"
                   name="about"
-                  placeholder="Short biography of the victim, including place of birth, ethnicity, age or age range, and profession, if known."
+                  placeholder="Short biography of the victim, including ethnicity or age range, if known."
                   ref={register({ required: false })}
                 />
               </div>
@@ -505,7 +505,7 @@ const SendingModal = () => {
                 <textarea
                   id="additional"
                   name="additional"
-                  placeholder="Any additional information including links to video testimonies, news articles or videos."
+                  placeholder="Any additional information."
 				  ref={register({ required: false })}
                 />
               </div>
