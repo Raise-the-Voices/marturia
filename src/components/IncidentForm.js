@@ -174,8 +174,8 @@ const Incident = (props) => {
   }
   
   const updateSaveState = (ID,val)  => {
-	  let newSaveState=[...saveState]
-	  newSaveState[ID]=val
+		let newSaveState=[...saveState]
+		newSaveState[ID]=val
 	  setSaveState(newSaveState)	  	 
   }
  
@@ -222,9 +222,9 @@ const Incident = (props) => {
 }  
   
   
-  const sendUpdateIncident = (formData, stateFieldId) => {	
+  const sendUpdateIncident = (formData, stateFieldId) => { 
 	let incidentObj = constructIncidentObj(formData,null)
-		
+	 
 	fetch(process.env.REACT_APP_API_BASE + 'incidents/' + String(formData.ID), {
 		method: "PUT",
 		headers: authContentTypeHeaders(),
@@ -377,7 +377,7 @@ const Incident = (props) => {
 			
 	}
 	
-	const sendIncidentChange = (e,index) => {	
+	const sendIncidentChange = (e,index) => { 
 		if(isEditMode && saveState[e.target.id]==="edited")		
 		{
 			if(incidentsData[index].ID)
