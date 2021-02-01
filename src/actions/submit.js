@@ -172,17 +172,27 @@ export const constructReportObj = (data) => {
 	  "additional_information": data.additional
     }
 
-	let reporterInfoObj = {
+	let reporterInfoObj = constructReportInfoObj(data)
+
+	let incidentTranslationObj = constructIncidentTranslationObj(data)
+	let incidentObj = constructIncidentObj(data,incidentTranslationObj)
+
+	let reportObj = constructVictimProfileObj(data, reporterInfoObj, victimTranslationObj, incidentObj)
+  return reportObj
+}
+
+export const constructReportInfoObj = (data)  => {
+	const reporterInfoObj = {
 		"name_of_reporter" : data.name,
     "email_of_reporter" : data.email,
     "discovery" : data.discovery,
     "is_direct_testimony": (data.own_testimony === 'yes')
 	}
+	return reporterInfoObj;
+}
 
-	let incidentTranslationObj = constructIncidentTranslationObj(data)
-	let incidentObj = constructIncidentObj(data,incidentTranslationObj)
-
-  let reportObj = {
+export const constructVictimProfileObj = (data, reporterInfoObj, victimTranslationObj, incidentObj)  => {
+  let victimProfileObj = {
 	  "name": data.victim_name,
 	  "legal_name": data.legal_name,
 	  "aliases": data.aliases,
@@ -197,5 +207,5 @@ export const constructReportObj = (data) => {
 	  "VictimTranslation": [victimTranslationObj],
 	  "Incident": [incidentObj]
   }
-  return reportObj
+	return victimProfileObj;
 }
