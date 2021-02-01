@@ -1,5 +1,6 @@
 import React from 'react';
-import { convertMonthtoStringFormat } from '../utils/utils';
+import { convertMonthtoStringFormat, tokenIsStillValid } from '../utils/utils';
+import { Link } from "react-router-dom";
 import './ViewSidebar.scss';
 
 const ViewSidebar = (props) => {
@@ -52,9 +53,12 @@ const ViewSidebar = (props) => {
 			<p> {convertMonthtoStringFormat(props.data.UpdatedAt)} </p>
 		</div>
 	)
-
+	const profileEditUrl="/editvictimprofile/"+props.data.ID
 	return (
 		<div className='sidebar-container'>
+			<div className="edit-link">
+				{tokenIsStillValid() && <Link to={profileEditUrl} target="_blank">Edit Victim Profile</Link>}
+			</div>
 			<div className='sidebar-top'>
 				{top}
 			</div>
