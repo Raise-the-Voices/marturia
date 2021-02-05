@@ -8,18 +8,20 @@ import Incident from '../components/Incident';
 import VictimDetails from '../components/VictimDetails';
 import {authContentTypeHeaders} from '../actions/headers';
 import { tokenIsStillValid } from '../utils/utils';
+import { langs } from '../data/languages.js';
 import './View.scss';
 
 const ViewVictim = (props) => {
 	let btnContainer = React.useRef()
 	const [vicData, setVicData] = useState(null);
 	const [incidents, setIncidents] = useState(null);
-	const [translations, setTranslations] = useState(null);
+	const [translations, setTranslations] = useState([]);
+	const [translate, setTranslate] = useState([]);
 	const [medias, setMedias] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [victimDNE, setVictimDNE] = useState(false);
 	const [btnState, setbtnState] = useState(false);
-	const [victimAvailableLang, setvictimAvailableLang] = useState(["English", "Spanish", "Chinese"])
+	const [victimAvailableLang, setvictimAvailableLang] = useState(null);
 	const [shown, setShown] = useState({
 		"Victim Details": true,
 		"Victim Media": true,
@@ -68,8 +70,18 @@ const ViewVictim = (props) => {
 		.then(res => res.json())
 		.then(data => {
 			if(data.status === 200) {
-				//console.log(data)
-				setTranslations(data.translations)
+
+				let tempLangArry = [];
+				data.translations.forEach(trans => {
+					tempLangArry.push(langs.filter(lang => {
+						return lang.code === trans.language
+					}));
+				});
+
+				setvictimAvailableLang(tempLangArry);
+				// console.log(tempLangArry);
+				setTranslations(data.translations);
+				setTranslate(data.translations[0]);
 			} else if(data.status === 400) {
 				//params error
 			} else {
@@ -104,6 +116,11 @@ const ViewVictim = (props) => {
 			setbtnState(false);
 		}
 	};
+
+	const handleChangeTrans = selecLangua => {
+		let consoletr = translations.filter(trans => trans.language === selecLangua);
+		setTranslate(consoletr[0]);
+	};
 	
 
 	let content;
@@ -126,8 +143,8 @@ const ViewVictim = (props) => {
 							{btnState && (<div className="dropdown">
 								<ul className="dropdown-ul">
 								{victimAvailableLang?.map((item) => (
-									<li className="dropdown-li">
-										<span> {item} </span>
+									<li className="dropdown-li" key={item[0].name} onClick={() => handleChangeTrans(item[0].code)}>  
+										<span> {item[0].name} </span>
 									</li>
 								))}
 								</ul>
@@ -140,7 +157,7 @@ const ViewVictim = (props) => {
 								<li>
 									<button type="button">
 										{/* Add new route to the form for add a new translation */}
-										<Link to="/" target="_blank">Add a new translation</Link>
+										<Link to={`/submit-vict-trans/${props.match.params.id}`} target="_blank">Add a new translation</Link>
 									</button>
 								</li>
 								<li>
@@ -158,12 +175,12 @@ const ViewVictim = (props) => {
 								</li>
 							</ul>
 						</div>
-	}
+						}
 						<ViewVictimItem
 							category={"Victim Details"}
 							shown={shown}
 							setShown={setShown}
-							info={<VictimDetails data={translations}/>}/>
+							info={<VictimDetails data={translate}/>}/>
 							
 						<ViewVictimItem
 						 	category={"Victim Media"}

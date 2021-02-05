@@ -5,7 +5,7 @@ import Popup from 'reactjs-popup';
 import MainLayout from '../components/MainLayout';
 import { tokenIsStillValid, getMMDDYYYYfromISO } from "../utils/utils";
 import { authContentTypeHeaders } from '../actions/headers';
-import { constructReportInfoObj, constructVictimProfileObj, uploadProfilePhoto } from '../actions/submit'
+import { constructReportInfoObj, constructVictimProfileObj, uploadProfilePhoto } from '../actions/submit';
 import data from '../data/countries.json';
 import './Submit.scss';
 
