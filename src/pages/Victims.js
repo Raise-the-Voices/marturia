@@ -14,8 +14,10 @@ const Victims = (props) => {
   const [country, setCountry] = useState('');
   const [statuses, setOption] = useState(null);
 
-  const constructQStr = (name = '', country = 'all', status = 'all') => {
-    return `?report-state=published&sort=created_at desc&victim-name=${name}&country=${country}&status=${status}`;
+  const constructQStr = (name, country, status) => {
+    return `?report-state=published&sort=created_at desc&victim-name=${name}&country=${
+      country || 'all'
+    }&status=${status || 'all'}`;
   };
 
   useEffect(() => {
