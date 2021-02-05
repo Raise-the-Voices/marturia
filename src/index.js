@@ -25,6 +25,7 @@ import ViewVictim from './pages/Viewvictim'
 import EditIncidents from './pages/EditIncidents'
 import EditVictimProfile from './pages/EditVictimProfile'
 import SubmitVictimTransl from './pages/AddVictimTransl'
+import EditVictimTranslate from './pages/EditVictimTranslate'
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -42,6 +43,7 @@ const Routes = () => (
 	    <Route path='/editincidents/:id' component={EditIncidents}/>
       <Route path='/editvictimprofile/:id' component={EditVictimProfile}/>
       <Route path='/submit-vict-trans/:id' component={SubmitVictimTransl}/>
+      <Route path='/edit-vict-trans/:victranslid' component={EditVictimTranslate}/>
       <Route component={NotFound}/>
     </Switch>
   </Router>
