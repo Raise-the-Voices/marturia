@@ -16,7 +16,7 @@ const ViewVictim = (props) => {
 	const [vicData, setVicData] = useState(null);
 	const [incidents, setIncidents] = useState(null);
 	const [translations, setTranslations] = useState([]);
-	const [translate, setTranslate] = useState([]);
+	const [translate, setTranslate] = useState({language:"en", code:"en"});
 	const [medias, setMedias] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [victimDNE, setVictimDNE] = useState(false);
@@ -121,8 +121,46 @@ const ViewVictim = (props) => {
 		let consoletr = translations.filter(trans => trans.language === selecLangua);
 		setTranslate(consoletr[0]);
 	};
-	
 
+	const handleDeleteTranslate = (victranslateID) => {
+		// console.log(victranslateID);
+
+			fetch(process.env.REACT_APP_API_BASE + 'victim-translations/' + victranslateID, {
+					method: "DELETE",
+					headers: authContentTypeHeaders()
+			})
+			.then(res => res.json())
+			.then(function (data) {	
+				if(data.status === 200) {
+
+				fetch(process.env.REACT_APP_API_BASE + 'victim-translations?idvictim=' + String(props.match.params.id), {
+					headers: authContentTypeHeaders()
+				})
+				.then(res => res.json())
+				.then(function (transList) {	
+					if(transList.status === 200) {
+						let tempLangArry = [];
+						transList.translations.forEach(trans => {
+							tempLangArry.push(langs.filter(lang => {
+								return lang.code === trans.language
+							}));
+						});
+
+						setvictimAvailableLang(tempLangArry);
+						// console.log(tempLangArry);
+						setTranslations(transList.translations);
+						setTranslate(transList.translations[0]);
+					} else if(transList.status === 400) {
+						//params error
+					} else {
+						//something went wrong
+					}
+				});
+			}
+		})
+		.catch(err => console.log(err))
+	};
+	
 	let content;
 	if(victimDNE) {
 		content = (
@@ -156,7 +194,6 @@ const ViewVictim = (props) => {
 							<ul className="ul-options">
 								<li>
 									<button type="button">
-										{/* Add new route to the form for add a new translation */}
 										<Link to={`/submit-vict-trans/${props.match.params.id}`} target="_blank">Add a new translation</Link>
 									</button>
 								</li>
@@ -166,13 +203,12 @@ const ViewVictim = (props) => {
 										<Link to="/" target="_blank">Edit this translation</Link>
 									</button>
 								</li>
-								<li>
-									<button type="button">
-										{/* Add new route or change it for a alert to confirm if want delete this translation
-										 if choose yes, should show a loading meanwhile the deletes is deleted*/}
-										<Link to="/" target="_blank">Delete this translation</Link>
+
+								{translate?.language !== "en" && (<li>
+									<button type="button" onClick={() => handleDeleteTranslate(translate.ID)}>
+										<span>Delete this translation</span>
 									</button>
-								</li>
+								</li>)}
 							</ul>
 						</div>
 						}
