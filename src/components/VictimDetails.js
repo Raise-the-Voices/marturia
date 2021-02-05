@@ -11,19 +11,18 @@ const VictimDetails = (props) => {
 		</div>
 		)
 	//console.log(props)
-	//alert(props.data[0].languages_spoken)
-	let language = langs.filter(lang => lang.code === props.data[0].languagues_spoken);
+	//alert(props.data[0].languages_spoken);
+	let language = langs.filter(lang => lang.code === props.data.language);
 	//alert(language[0].code);
-	
 	return (
 		<div className='details-container'>
 			       {/* <p> Nationality </p>*/}
-			<p> <b>Health Status:</b> {props.data[0].health_status} </p>
-			<p> <b>Health Issues:</b> </p> <p className="white-space-pre-line"> {props.data[0].health_issues}  </p>
-			<p> <b>Languages Spoken:</b> {language && language[0] && language[0].name}	</p>			
-			<p> <b>Profession:</b> {props.data[0].profession}</p>
-			<p> <b>About the Victim:</b> </p> <p className="white-space-pre-line"> {props.data[0].about_the_victim} </p>
-			<p> <b>Additional Information:</b> </p> <p className="white-space-pre-line"> {props.data[0].additional_information} </p>
+			<p> <b>Health Status:</b> {props?.data?.health_status} </p>
+			<p> <b>Health Issues:</b> </p> <p className="white-space-pre-line"> {props?.data?.health_issues}  </p>
+			<p> <b>Languages Spoken:</b> {language[0]?.name}	</p>			
+			<p> <b>Profession:</b> {props?.data?.profession}</p>
+			<p> <b>About the Victim:</b> </p> <p className="white-space-pre-line"> {props?.data?.about_the_victim} </p>
+			<p> <b>Additional Information:</b> </p> <p className="white-space-pre-line"> {props?.data?.additional_information} </p>
 		</div>
 	)
 }
