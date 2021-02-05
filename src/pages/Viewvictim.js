@@ -200,7 +200,7 @@ const ViewVictim = (props) => {
 								<li>
 									<button type="button">
 										{/* Add new route with translation ID to the form for edit it */}
-										<Link to="/" target="_blank">Edit this translation</Link>
+										<Link to={`/edit-vict-trans/${translate.ID}`} target="_blank">Edit this translation</Link>
 									</button>
 								</li>
 
