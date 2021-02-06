@@ -68,61 +68,6 @@ const Victims = (props) => {
     fetchVictims();
   }, []);
 
-  //   useEffect(() => {
-  //     document.title = 'Victims List - Testimony Database';
-  //     let query = queryString.parse(props.location.search);
-  //     setCountry(query.country ? query.country : '');
-  //     setStatus(query.status ? query.status : '');
-  //     setName(query['victim-name'] ? query['victim-name'] : '');
-  //     let qstr = constructQStr(query['victim-name'], query.country, query.status);
-
-  //     Promise.all([
-  //       fetch(process.env.REACT_APP_API_BASE + 'options', {
-  //         method: 'GET',
-  //       }),
-  //       fetch(process.env.REACT_APP_API_BASE + 'victims' + qstr),
-  //     ])
-  //       .then(function (responses) {
-  //         // Get a JSON object from each of the responses
-  //         return Promise.all(
-  //           responses.map(function (response) {
-  //             return response.json();
-  //           })
-  //         );
-  //       })
-  //       .then(function (data) {
-  //         // const returnedData = data[0]['options-list'].filter(
-  //         //   (option) => option.group === 'current_status'
-  //         // );
-  //         // setOption(returnedData);
-  //         if (data[1].status === 400) {
-  //           //params error
-  //           alert('parameter error');
-  //         } else if (data[1].status === 200) {
-  //           let vl = [];
-  //           console.log(data[1]);
-  //           data[1].victim.forEach((victim) => {
-  //             vl.push({
-  //               id: victim.ID,
-  //               name: victim.name,
-  //               status: victim.current_status,
-  //               location: victim.country,
-  //               dob: convertMonthtoStringFormat(victim.date_of_birth),
-  //               url: victim.profile_image_url,
-  //             });
-  //           });
-  //           setVictimList(vl);
-  //         } else {
-  //           //something went wrong
-  //           alert('something went wrong');
-  //         }
-  //       })
-  //       .catch(function (error) {
-  //         // if there's an error, log it
-  //         console.log(error);
-  //       });
-  //   }, []);
-
   let content;
 
   if (isSearch) {
