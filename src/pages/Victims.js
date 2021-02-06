@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import queryString from 'query-string';
+
 import MainLayout from '../components/MainLayout';
 import { convertMonthtoStringFormat } from '../utils/utils';
 import './Victims.scss';
 import data from '../data/countries.json';
-import queryString from 'query-string';
 
 const Victims = (props) => {
   const [victimList, setVictimList] = useState(null);
   const [isSearch, setIsSearch] = useState(false);
   const [name, setName] = useState('');
   const [status, setStatus] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('Select Country');
   const [statuses, setOption] = useState(null);
 
   const constructQStr = (name, country, status) => {
