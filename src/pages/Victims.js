@@ -12,7 +12,7 @@ const Victims = (props) => {
   const [isSearch, setIsSearch] = useState(false);
   const [name, setName] = useState('');
   const [status, setStatus] = useState('');
-  const [country, setCountry] = useState('Select Country');
+  const [country, setCountry] = useState('');
   const [statuses, setOption] = useState(null);
 
   const constructQStr = (name, country, status) => {
