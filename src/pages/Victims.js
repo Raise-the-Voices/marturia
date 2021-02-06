@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import queryString from 'query-string';
+import axios from 'axios';
 
 import MainLayout from '../components/MainLayout';
 import { convertMonthtoStringFormat } from '../utils/utils';
@@ -12,8 +13,9 @@ const Victims = (props) => {
   const [isSearch, setIsSearch] = useState(false);
   const [name, setName] = useState('');
   const [status, setStatus] = useState('');
-  const [country, setCountry] = useState('Select Country');
-  const [statuses, setOption] = useState(null);
+  const [country, setCountry] = useState('');
+  const [statuses, setStatuses] = useState(null);
+  const apiUrl = process.env.REACT_APP_API_BASE;
 
   const constructQStr = (name, country, status) => {
     return `?report-state=published&sort=created_at desc&victim-name=${
@@ -21,59 +23,105 @@ const Victims = (props) => {
     }&country=${country || 'all'}&status=${status || 'all'}`;
   };
 
-  useEffect(() => {
-    document.title = 'Victims List - Testimony Database';
-    let query = queryString.parse(props.location.search);
-    setCountry(query.country ? query.country : '');
-    setStatus(query.status ? query.status : '');
-    setName(query['victim-name'] ? query['victim-name'] : '');
-    let qstr = constructQStr(query['victim-name'], query.country, query.status);
-    Promise.all([
-      fetch(process.env.REACT_APP_API_BASE + 'options', {
-        method: 'GET',
-      }),
-      fetch(process.env.REACT_APP_API_BASE + 'victims' + qstr),
-    ])
-      .then(function (responses) {
-        // Get a JSON object from each of the responses
-        return Promise.all(
-          responses.map(function (response) {
-            return response.json();
-          })
-        );
-      })
-      .then(function (data) {
-        const returnedData = data[0]['options-list'].filter(
-          (option) => option.group === 'current_status'
-        );
-        setOption(returnedData);
-        if (data[1].status === 400) {
-          //params error
-          alert('parameter error');
-        } else if (data[1].status === 200) {
-          let vl = [];
-          console.log(data[1]);
-          data[1].victim.forEach((victim) => {
-            vl.push({
-              id: victim.ID,
-              name: victim.name,
-              status: victim.current_status,
-              location: victim.country,
-              dob: convertMonthtoStringFormat(victim.date_of_birth),
-              url: victim.profile_image_url,
-            });
-          });
-          setVictimList(vl);
-        } else {
-          //something went wrong
-          alert('something went wrong');
-        }
-      })
-      .catch(function (error) {
-        // if there's an error, log it
-        console.log(error);
+  const fetchOptions = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}options`);
+      const returnedData = response.data['options-list'].filter(
+        (option) => option.group === 'current_status'
+      );
+      setStatuses(returnedData);
+    } catch (error) {
+      alert('Something went wrong');
+    }
+  };
+
+  const fetchVictims = async () => {
+    try {
+      const query = queryString.parse(props.location.search);
+      setCountry(query.country || '');
+      setStatus(query.status || '');
+      setName(query['victim-name'] || '');
+      let qstr = constructQStr(
+        query['victim-name'],
+        query.country,
+        query.status
+      );
+      const response = await axios.get(`${apiUrl}victims${qstr}`);
+      const victimList = response.data.victim.map((victim) => {
+        return {
+          id: victim.ID,
+          name: victim.name,
+          status: victim.current_status,
+          location: victim.country,
+          dob: convertMonthtoStringFormat(victim.date_of_birth),
+          url: victim.profile_image_url,
+        };
       });
+      setVictimList(victimList);
+    } catch (error) {
+      alert('Something went wrong');
+    }
+  };
+
+  useEffect(() => {
+    fetchOptions();
+    fetchVictims();
   }, []);
+
+  //   useEffect(() => {
+  //     document.title = 'Victims List - Testimony Database';
+  //     let query = queryString.parse(props.location.search);
+  //     setCountry(query.country ? query.country : '');
+  //     setStatus(query.status ? query.status : '');
+  //     setName(query['victim-name'] ? query['victim-name'] : '');
+  //     let qstr = constructQStr(query['victim-name'], query.country, query.status);
+
+  //     Promise.all([
+  //       fetch(process.env.REACT_APP_API_BASE + 'options', {
+  //         method: 'GET',
+  //       }),
+  //       fetch(process.env.REACT_APP_API_BASE + 'victims' + qstr),
+  //     ])
+  //       .then(function (responses) {
+  //         // Get a JSON object from each of the responses
+  //         return Promise.all(
+  //           responses.map(function (response) {
+  //             return response.json();
+  //           })
+  //         );
+  //       })
+  //       .then(function (data) {
+  //         // const returnedData = data[0]['options-list'].filter(
+  //         //   (option) => option.group === 'current_status'
+  //         // );
+  //         // setOption(returnedData);
+  //         if (data[1].status === 400) {
+  //           //params error
+  //           alert('parameter error');
+  //         } else if (data[1].status === 200) {
+  //           let vl = [];
+  //           console.log(data[1]);
+  //           data[1].victim.forEach((victim) => {
+  //             vl.push({
+  //               id: victim.ID,
+  //               name: victim.name,
+  //               status: victim.current_status,
+  //               location: victim.country,
+  //               dob: convertMonthtoStringFormat(victim.date_of_birth),
+  //               url: victim.profile_image_url,
+  //             });
+  //           });
+  //           setVictimList(vl);
+  //         } else {
+  //           //something went wrong
+  //           alert('something went wrong');
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         // if there's an error, log it
+  //         console.log(error);
+  //       });
+  //   }, []);
 
   let content;
 
