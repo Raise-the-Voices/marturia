@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import axios from 'axios';
 
@@ -113,7 +113,7 @@ const Victims = (props) => {
                 onChange={(e) => setCountry(e.target.value)}
                 value={country}
               >
-                <option key={'all'} value='Select Country'>
+                <option key={'all'} value='all'>
                   Select Country
                 </option>
                 {data.countries.map((item) => (
