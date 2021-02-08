@@ -144,7 +144,7 @@ export const convertIncidentRestToFormData = (incidentArray) => {
 
 export const constructIncidentTranslationObj = (data) => {
 	return {
-		"language" : "en",
+		"language" : data.language === ""? "en": data.language,
 		"narrative_of_incident" : data.incident_narrative
 
 	}
