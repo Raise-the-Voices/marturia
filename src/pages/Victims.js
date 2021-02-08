@@ -1,24 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import queryString from 'query-string';
-
 import MainLayout from '../components/MainLayout';
 import { convertMonthtoStringFormat } from '../utils/utils';
 import './Victims.scss';
 import data from '../data/countries.json';
+
+const queryString = require('query-string');
 
 const Victims = (props) => {
   const [victimList, setVictimList] = useState(null);
   const [isSearch, setIsSearch] = useState(false);
   const [name, setName] = useState('');
   const [status, setStatus] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('Select Country');
   const [statuses, setOption] = useState(null);
 
   const constructQStr = (name, country, status) => {
-    return `?report-state=published&sort=created_at desc&victim-name=${
-      name || ''
-    }&country=${country || 'all'}&status=${status || 'all'}`;
+    let qstr = '?report-state=published&sort=created_at desc&';
+
+    if (name) {
+      qstr += 'victim-name=' + name + '&';
+    } else {
+      qstr += 'victim-name=' + '&';
+    }
+
+    if (country && country !== 'Select Country') {
+      qstr += 'country=' + country + '&';
+    } else {
+      qstr += 'country=all' + '&';
+    }
+
+    if (status) {
+      qstr += 'status=' + status;
+    } else {
+      qstr += 'status=all';
+    }
+    return qstr;
   };
 
   useEffect(() => {
