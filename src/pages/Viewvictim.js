@@ -12,7 +12,7 @@ import { langs } from '../data/languages.js';
 import './View.scss';
 
 const ViewVictim = (props) => {
-	let btnContainer = React.useRef()
+	let btnContainer = React.useRef();
 	const [vicData, setVicData] = useState(null);
 	const [incidents, setIncidents] = useState(null);
 	const [translations, setTranslations] = useState([]);
@@ -188,8 +188,8 @@ const ViewVictim = (props) => {
 								</ul>
 							</div>
 							)}
-
 						</div>
+
 						{tokenIsStillValid() && <div >
 							<ul className="ul-options">
 								<li>

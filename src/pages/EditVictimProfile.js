@@ -75,7 +75,7 @@ const Submit = (props) => {
     
 	}, []);
 
-	const { register, trigger, errors, getValues, handleSubmit, setValue, reset } = useForm({
+	const { register, errors, handleSubmit, setValue } = useForm({
     defaultValues: {
       name: "",
       email: "",

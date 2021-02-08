@@ -258,10 +258,9 @@ const Incident = (props) => {
 
 
   const sendAddIncidentTranslation = (formData, index, stateFieldId) => {	
-	let incidentTransObj = constructIncidentTranslationObj(formData)
-	
-	
-	
+	formData.language = "en";
+	let incidentTransObj = constructIncidentTranslationObj(formData);
+
 	fetch(process.env.REACT_APP_API_BASE + 'incidents/' + String(formData.ID)+'/incident-translations', {
 		method: "POST",
 		headers: authContentTypeHeaders(),
@@ -285,8 +284,9 @@ const Incident = (props) => {
 }
 
   const sendUpdateIncidentTranslation = (formData, stateFieldId) => {	
-	let incidentTransObj = constructIncidentTranslationObj(formData)
-		
+
+	formData.language = "en";
+	let incidentTransObj = constructIncidentTranslationObj(formData);
 	fetch(process.env.REACT_APP_API_BASE + 'incident-translations/' + String(formData.translationID), {
 		method: "PUT",
 		headers: authContentTypeHeaders(),
