@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from 'react-router-dom';
 import ViewAllUsers from '../components/Viewallusers';
 import CreateUser from '../components/Createuser';
 import SetReportStatus from '../components/SetReportStatus';
@@ -8,68 +14,77 @@ import { tokenIsStillValid } from '../utils/utils';
 
 const routes = [
   {
-    path: "/admin/1",
+    path: '/admin/1',
     sidebar: () => <div>Create User</div>,
-    main: () => <CreateUser/>
+    main: () => <CreateUser />,
   },
   {
-    path: "/admin/2",
+    path: '/admin/2',
     sidebar: () => <div>View All Users</div>,
-    main: () => <ViewAllUsers/>
+    main: () => <ViewAllUsers />,
   },
   {
-    path: "/admin/3",
+    path: '/admin/3',
     sidebar: () => <div>Manage Reports</div>,
-    main: () => <SetReportStatus/>
+    main: () => <SetReportStatus />,
   },
   {
-    path: "/admin/4",
+    path: '/admin/4',
     sidebar: () => <div>Options Menu</div>,
-    main: () => <OptionMenu/>
-  }
+    main: () => <OptionMenu />,
+  },
 ];
 
 const AdminMenu = () => {
+  if (!tokenIsStillValid()) {
+    return <Redirect to='/login' />;
+  }
 
-if(!tokenIsStillValid()) {
-		return <Redirect to='/login'/>
-	}
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('role');
+    localStorage.removeItem('name');
+    window.location.reload();
+  };
+  const localStorageName = localStorage.getItem('name');
+  const localStorageRole = localStorage.getItem('role');
+  const adminRole = 'admin';
 
-	const logout = () => {
-		localStorage.removeItem('token')
-		localStorage.removeItem('expiration')
-		localStorage.removeItem('role')
-		window.location.reload()
-	}
-return(
-	<Router>
-      <div className="admin-wrapper">
-        <div className="admin-choice-container">
+  return (
+    <Router>
+      <div className='admin-wrapper'>
+        <div className='admin-choice-container'>
           <ul>
-		  {localStorage.getItem('role')==='admin' &&
-			<li>
-              <Link to="/admin/1">Create User</Link>
-            </li>
-		  }
-		 {localStorage.getItem('role')==='admin' &&
+            {localStorageName && (
+              <li>
+                <div>Hi, {localStorageName}</div>
+              </li>
+            )}
+            {localStorageRole === adminRole && (
+              <>
+                <li>
+                  <Link to='/admin/1'>Create User</Link>
+                </li>
+                <li>
+                  <Link to='/admin/2'>View All Users</Link>
+                </li>
+              </>
+            )}
             <li>
-              <Link to="/admin/2">View All Users</Link>
-            </li>           
-		 } 
-			<li>
-        <Link to="/admin/3">Manage Reports</Link>
-      </li>
-      {localStorage.getItem('role')==='admin' &&
-        <li>
-          <Link to="/admin/4">Options Menu</Link>
-        </li>           
-		  } 
-		  <li>
-			<Link onClick={logout} to="">Logout</Link>
-		   </li>
+              <Link to='/admin/3'>Manage Reports</Link>
+            </li>
+            {localStorageRole === adminRole && (
+              <li>
+                <Link to='/admin/4'>Options Menu</Link>
+              </li>
+            )}
+            <li>
+              <Link onClick={logout} to=''>
+                Logout
+              </Link>
+            </li>
           </ul>
-
-        
         </div>
 
         <div className='admin-container'>
@@ -89,6 +104,6 @@ return(
       </div>
     </Router>
   );
-}
+};
 
-export default AdminMenu
+export default AdminMenu;
