@@ -15,7 +15,7 @@ const Login = () => {
   }, []);
 
   if (tokenIsStillValid()) {
-    return <Redirect to='/admin' />;
+    return <Redirect to="/admin" />;
   }
 
   const handleFormSubmit = (data) => {
@@ -52,28 +52,28 @@ const Login = () => {
 
   return (
     <MainLayout>
-      <div className='login'>
-        <div className='login-container'>
-          <p name='above-form' />
+      <div className="login">
+        <div className="login-container">
+          <p name="above-form" />
           <form onSubmit={handleSubmit(handleFormSubmit)}>
-            <label htmlFor='email'> Email </label>
+            <label htmlFor="email"> Email </label>
             <input
-              type='text'
-              name='email'
+              type="text"
+              name="email"
               ref={(input) => {
                 register(input, { required: true });
                 nameRef.current = input;
               }}
             />
-            <label htmlFor='password'> Password </label>
+            <label htmlFor="password"> Password </label>
             <input
-              type='password'
-              name='password'
+              type="password"
+              name="password"
               ref={register({ required: true })}
             />
-            <p className='error'> {err} </p>
-            <Link to='reqreset'>
-              <p className='link'> Forgot Password? </p>
+            <p className="error"> {err} </p>
+            <Link to="reqreset">
+              <p className="link"> Forgot Password? </p>
             </Link>
             <button> Login </button>
           </form>
