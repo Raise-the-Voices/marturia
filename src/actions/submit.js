@@ -167,7 +167,7 @@ export const constructReportObj = (data) => {
 	  "health_status": data.health_status,
 	  "health_issues": data.health_issues,
 	  "profession": data.profession,
-	  "languagues_spoken": data.language,
+	  "languagues_spoken": data.languages_spoken,
 	  "about_the_victim": data.about,
 	  "additional_information": data.additional
     }
