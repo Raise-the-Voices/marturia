@@ -141,8 +141,10 @@ const SendingModal = () => {
   }
   
   const handleFormSubmit = (form) => {
-	  setSubmitting(true)
-    let reportObj = constructReportObj(form)
+    setSubmitting(true);
+    form['language'] = defaultLang.code;    
+    let reportObj = constructReportObj(form);
+
 	  fetch(process.env.REACT_APP_API_BASE + 'reports', {
 		  method: "POST",
 		  headers: authContentTypeHeaders(),
@@ -398,20 +400,16 @@ const SendingModal = () => {
               {errors.country &&
 								<p className="error">Country is required</p>}
               </div>
-			   <div className="row">
-			  				<label htmlFor="language">Language (Default: English)</label>
-                <select
-								  id="language"
-								  name="language"
-								  ref={register({ required: true })}>
-                  {langs.map((item) => (
-                  <option
-                    key={item.code + item.name}
-                    value={item.code}>
-                    {item.name}
-                  </option>
-                ))}
-                </select>
+              <div className="row">
+                <label htmlFor="languages_spoken">languages spoken</label>
+                <input
+                  id="languages_spoken"
+                  name="languages_spoken"
+                  type="text"
+                  ref={(input) => {
+                    register(input, { required: false });
+                  }}
+                />
               </div>
 			   <div className="row">
                 <label htmlFor="profession">Profession</label>
