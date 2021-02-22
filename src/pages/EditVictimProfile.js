@@ -90,7 +90,6 @@ const Submit = (props) => {
       country: "",
       detainment_date: "",
       detainment_location:"",
-      location:"",
       status:"",
       photo:""
     }
@@ -322,17 +321,6 @@ const Submit = (props) => {
                   placeholder="Location where victim was seen the last time.  Enter unknown if you don't know."
                   ref={register({ required: false })}
                 />
-              </div>
-              <div className="row">
-                <label htmlFor="location">Current Location</label>
-                <textarea
-                  id="location"
-                  name="location"
-                  placeholder="Where the victim is now. Enter unknown, if you don't know."
-                  ref={register({ required: false })}
-                />
-							{errors.location &&
-								<p className="error">Current location is required</p>}
               </div>
               <div className="row">
                 <label htmlFor="status">Current Status</label>
