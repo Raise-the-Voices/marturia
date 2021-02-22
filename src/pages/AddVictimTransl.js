@@ -121,7 +121,7 @@ const SubmitVictimTransl = (props) => {
                 <textarea
                   id="languages_spoken"
                   name="languages_spoken"
-                  placeholder="List known health issues of the victim."
+                  placeholder="Languages Spoken."
 				          ref={register({ required: false })}
                 />
               </div>
